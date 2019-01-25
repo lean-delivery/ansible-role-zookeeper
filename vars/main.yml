@@ -1,0 +1,3 @@
+---
+# vars file for zookeeper
+zk_install_type: '{{ zk_tarball_installation | ternary("tarball_install", "package_install") }}'

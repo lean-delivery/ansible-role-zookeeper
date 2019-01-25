@@ -1,0 +1,99 @@
+---
+- name: 'Install and configure Zookeeper'
+  block:
+  - name: 'Group creation'
+    group:
+      name: '{{ zk_group }}'
+      system: True
+
+  - name: 'User creation'
+    user:
+      name: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+      system: True
+
+  - name: 'Ensure the tarball dir exists at {{ zk_tarball_dir }}'
+    file:
+      path: '{{ zk_tarball_dir }}'
+      state: directory
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+
+  - name: 'Download zookeeper version {{ zk_version }}'
+    get_url:
+      url: '{{ zk_url }}'
+      dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+      checksum: md5:{{ zk_checksum }}
+    register: result
+    until: result is succeeded
+    retries: 10
+    delay: 2
+
+  - name: 'Creates directory'
+    file:
+      path: '{{ zk_dir }}'
+      state: directory
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+
+  - name: 'Unpack tarball'
+    unarchive:
+      remote_src: True
+      src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+      dest: '{{ zk_dir }}'
+      extra_opts: '--strip-components=1'
+      creates: '{{ zk_dir }}/conf'
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+
+  - name: 'Create zookeeper {{ zk_version }} directory.'
+    file:
+      path: '{{ zoo_dir }}'
+      state: directory
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+    loop:
+      - '{{ zk_data_dir }}'
+      - '{{ zk_log_dir }}'
+    loop_control:
+      loop_var: zoo_dir
+
+  - name: 'Write myid file'
+    template:
+      src: myid.j2
+      dest: '{{ zk_data_dir }}/myid'
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+      force: '{{ zk_force_myid }}'
+    notify:
+      - Restart zookeeper
+
+  - name: 'Configure zookeeper zoo.cfg and log4j'
+    template:
+      src: '{{ config }}.j2'
+      dest: '{{ zk_dir }}/conf/{{ config }}'
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+    loop:
+      - zoo.cfg
+      - log4j.properties
+    loop_control:
+      loop_var: config
+    notify:
+      - Restart zookeeper
+
+  - name: 'Add zookeeper bin dir to the PATH'
+    template:
+      src: zookeeper_path.sh.j2
+      dest: /etc/profile.d/zookeeper_path.sh
+      mode: 0755
+
+  become: True
+
+- name: 'Set system service'
+  include_tasks: '{{ service_manager }}'
+  with_first_found:
+    - 'service/{{ ansible_service_mgr }}.yml'
+    - service/systemv.yml
+  loop_control:
+    loop_var: service_manager
