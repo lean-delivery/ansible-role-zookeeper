@@ -3,8 +3,8 @@ Zookeeper installation
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-zookeeper/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-zookeeper.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-zookeeper)
 [![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.zookeeper-blue.svg)](https://galaxy.ansible.com/lean_delivery/zookeeper)
-![Ansible](https://img.shields.io/ansible/role/d/role_id.svg)
-![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2Frole_id%2F&query=$.min_ansible_version)
+![Ansible](https://img.shields.io/ansible/role/d/36578.svg)
+![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F36578%2F&query=$.min_ansible_version)
 
 This role:
   - Installs ZooKeeper
@@ -18,6 +18,11 @@ Requirements
    - CentOS
        7
    - Ubuntu
+    - 16.04
+    - 18.04
+  - Debian
+    - 8
+    - 9
 
 Role Variables
 --------------
