@@ -59,7 +59,7 @@ https://github.com/lean-delivery/ansible-role-java
 Example Playbook
 ----------------
 
-```yml
+```yaml
 - name: Installing ZooKeeper
   hosts: zookeeper
   roles:
