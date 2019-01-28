@@ -8,7 +8,7 @@ driver:
 lint:
   name: yamllint
   options:
-    config-file: molecule/yamllint.yml
+    config-file: .yamllint.yml
 platforms:
   - name: test-docker-centos7-zookeeper
     image: leandelivery/docker-systemd:centos7
