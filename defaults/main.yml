@@ -1,0 +1,23 @@
+---
+zk_version: 3.4.13
+zk_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz'
+zk_checksum: c380eb03049998280895078d570cb944
+zk_tarball_installation: True
+zk_user: zookeeper
+zk_group: zookeeper
+zk_debian_apt_repositories: 'deb http://us-east1.gce.archive.ubuntu.com/ubuntu/ bionic universe'
+zk_redhat_yum_repositories: https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm
+zk_client_port: 2181
+zk_init_limit: 5
+zk_sync_limit: 2
+zk_tick_time: 2000
+zk_autopurge_purgeInterval: 0
+zk_autopurge_snapRetainCount: 10
+zk_data_dir: /var/lib/zookeeper
+zk_log_dir: /var/log/zookeeper
+zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
+zk_force_myid: True
+zk_tarball_dir: /opt/src
+zk_rolling_log_file_max_size: 10MB
+zk_max_rolling_log_file_count: 10
+zk_inventory_group: zookeeper
