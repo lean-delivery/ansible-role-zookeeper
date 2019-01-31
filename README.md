@@ -50,6 +50,7 @@ Role Variables
  - `zk_rolling_log_file_max_size` - zookeeper log file size default: `10MB`
  - `zk_max_rolling_log_file_count`- zookeeper log file count default: `10`
  - `zk_inventory_group` - zookeeper inventory group name default: `zookeeper`
+ - `zk_host_ip` - expression to get zookeeper IP address default: `{{ ansible_default_ipv4.address }}`
 
 Dependencies
 ------------
