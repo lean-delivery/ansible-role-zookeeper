@@ -36,6 +36,16 @@
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
 
+  - name: 'Creates directory symlink'
+    file:
+      src: '{{ zk_dir }}'
+      dest: '{{ zk_dir | replace("-" + zk_version, "") }}'
+      state: link
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+    when:
+      - zk_dir | replace("-" + zk_version, "") != zk_dir
+
   - name: 'Unpack tarball'
     unarchive:
       remote_src: True
