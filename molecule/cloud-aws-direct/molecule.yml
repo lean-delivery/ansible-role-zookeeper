@@ -74,38 +74,6 @@ platforms:
       - zookeeper
       - zookeeper_ubuntu
 
-  - name: test-aws-Debian9-zookeeper
-    image: ami-003f19e0e687de1cd
-    instance_type: m5.large
-    region: us-east-1
-    vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
-    spot_price: 0.04
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    ssh_user: admin
-    groups:
-      - debian_family
-      - zookeeper
-      - zookeeper_ubuntu
-
-  - name: test-aws-Debian8-zookeeper
-    image: ami-49e5cb5e
-    instance_type: m5.large
-    region: us-east-1
-    vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
-    spot_price: 0.04
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    ssh_user: admin
-    groups:
-      - debian_family
-      - zookeeper
-      - zookeeper_ubuntu
-
 provisioner:
   name: ansible
   log: False
