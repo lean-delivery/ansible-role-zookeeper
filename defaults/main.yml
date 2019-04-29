@@ -1,5 +1,6 @@
 ---
 zk_version: 3.4.13
+zk_version_dynamic_reconfig: 3.5.0
 zk_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz'
 zk_checksum: c380eb03049998280895078d570cb944
 zk_tarball_installation: True
