@@ -8,5 +8,7 @@
   hosts: all
   roles:
     - role: lean_delivery.java
+      java_package: jdk
+      java_major_version: 11
     - role: ansible-role-zookeeper
       zk_force_myid: False

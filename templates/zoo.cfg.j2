@@ -19,10 +19,10 @@ autopurge.snapRetainCount={{ zk_autopurge_snapRetainCount }}
 {% set dynamic_reconfig_version = zk_version_dynamic_reconfig.split('.') %}
 {% set with_dynamic_reconfig = false %}
 
-{% if current_version[0] = dynamic_reconfig_version[0] and current_version[1] >=  dynamic_reconfig_version[1]%}
+{% if current_version[0]|int == dynamic_reconfig_version[0]|int and current_version[1]|int >=  dynamic_reconfig_version[1]|int %}
 {% set with_dynamic_reconfig = true %}
 {% endif %}
-{% if current_version[0] > dynamic_reconfig_version[0] %}
+{% if current_version[0]|int > dynamic_reconfig_version[0]|int %}
 {% set with_dynamic_reconfig = true %}
 {% endif %}
 

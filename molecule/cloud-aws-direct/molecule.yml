@@ -77,6 +77,11 @@ platforms:
 provisioner:
   name: ansible
   log: False
+  inventory:
+    group_vars:
+      zookeeper:
+        transport: web
+        transport_web: https://download.oracle.com/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/provisioning/AWS/prepare.yml
