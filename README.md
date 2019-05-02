@@ -35,10 +35,6 @@ Role Variables
 
     default: `http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz`
 
- - `zk_checksum` - package checksum
-
-    default: `b0ecf30e2cd83eac8de3454e06bcae28`
-
  - `zk_tarball_installation` - installation from tarball(or repository)
 
     default: `True`

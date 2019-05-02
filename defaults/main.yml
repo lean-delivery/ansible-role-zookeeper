@@ -1,7 +1,6 @@
 ---
 zk_version: 3.4.14
 zk_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz'
-zk_checksum: b0ecf30e2cd83eac8de3454e06bcae28
 zk_tarball_installation: True
 zk_user: zookeeper
 zk_group: zookeeper

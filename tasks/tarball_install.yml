@@ -19,11 +19,18 @@
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
 
+  - name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
+    set_fact:
+      sha_value: '{{ sha_url_item }}'
+    with_url: '{{ zk_url }}.{{ zk_checksum }}'
+    loop_control:
+      loop_var: sha_url_item
+
   - name: 'Download zookeeper version {{ zk_version }}'
     get_url:
       url: '{{ zk_url }}'
       dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-      checksum: md5:{{ zk_checksum }}
+      checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
     register: result
     until: result is succeeded
     retries: 10
