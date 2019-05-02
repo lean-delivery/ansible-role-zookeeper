@@ -115,6 +115,10 @@ Role Variables
 
     default: `zookeeper`
 
+  - `zk_service_name` - zookeeper service name
+
+    default: `zookeeper`
+
   - `zk_service_start` - to start zookeeper service in the end of role/Playbook
 
     default: `True`

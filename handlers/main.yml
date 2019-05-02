@@ -4,3 +4,5 @@
     name: zookeeper
     state: restarted
   become: True
+  when:
+    - zk_service_start
