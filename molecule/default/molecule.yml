@@ -33,11 +33,6 @@ platforms:
       - zookeeper_ubuntu
 provisioner:
   name: ansible
-  inventory:
-    group_vars:
-      zookeeper:
-        transport: web
-        transport_web: https://download.oracle.com/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz
   lint:
     name: ansible-lint
 scenario:

@@ -15,30 +15,7 @@ autopurge.snapRetainCount={{ zk_autopurge_snapRetainCount }}
 {{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_default_ipv4'].address)) }}
 {%- endfor %}
 
-{% set current_version = zk_version.split('.') %}
-{% set dynamic_reconfig_version = zk_version_dynamic_reconfig.split('.') %}
-{% set with_dynamic_reconfig = false %}
-
-{% if current_version[0]|int == dynamic_reconfig_version[0]|int and current_version[1]|int >=  dynamic_reconfig_version[1]|int %}
-{% set with_dynamic_reconfig = true %}
-{% endif %}
-{% if current_version[0]|int > dynamic_reconfig_version[0]|int %}
-{% set with_dynamic_reconfig = true %}
-{% endif %}
-
-{% if with_dynamic_reconfig is sameas true %}
-{% for server in ips %}
-{% if server.host is defined %}
-{% if server.ip is defined %}
-server.{{server.id}}={{server.ip}}:2888:3888;{{zk_client_port}}
-{% else %}
-server.{{server.id}}={{server.host}}:2888:3888;{{zk_client_port}}
-{% endif %}
-{% else %}
-server.{{loop.index}}={{server}}:2888:3888;{{zk_client_port}}
-{% endif %}
-{% endfor %}
-{% else %}
+{% if (zk_version is version_compare('3.5.0', '<')) %}
 {% for server in ips %}
 {% if server.host is defined %}
 {% if server.ip is defined %}

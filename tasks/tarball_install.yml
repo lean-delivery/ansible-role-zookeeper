@@ -1,12 +1,12 @@
 ---
-- name: 'Install and configure Zookeeper'
+- name: Install and configure Zookeeper
   block:
-  - name: 'Group creation'
+  - name: Group creation
     group:
       name: '{{ zk_group }}'
       system: True
 
-  - name: 'User creation'
+  - name: User creation
     user:
       name: '{{ zk_user }}'
       group: '{{ zk_group }}'
@@ -29,14 +29,14 @@
     retries: 10
     delay: 2
 
-  - name: 'Creates directory'
+  - name: Creates directory
     file:
       path: '{{ zk_dir }}'
       state: directory
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
 
-  - name: 'Creates directory symlink'
+  - name: Creates directory symlink
     file:
       src: '{{ zk_dir }}'
       dest: '{{ zk_dir | replace("-" + zk_version, "") }}'
@@ -46,7 +46,7 @@
     when:
       - zk_dir | replace("-" + zk_version, "") != zk_dir
 
-  - name: 'Unpack tarball'
+  - name: Unpack tarball
     unarchive:
       remote_src: True
       src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
@@ -68,7 +68,7 @@
     loop_control:
       loop_var: zoo_dir
 
-  - name: 'Write myid file'
+  - name: Write myid file
     template:
       src: myid.j2
       dest: '{{ zk_data_dir }}/myid'
@@ -76,9 +76,9 @@
       group: '{{ zk_group }}'
       force: '{{ zk_force_myid }}'
     notify:
-      - Restart zookeeper
+      - restart Zookeeper
 
-  - name: 'Configure zookeeper zoo.cfg and log4j'
+  - name: Configure zookeeper zoo.cfg and log4j
     template:
       src: '{{ config }}.j2'
       dest: '{{ zk_dir }}/conf/{{ config }}'
@@ -90,9 +90,9 @@
     loop_control:
       loop_var: config
     notify:
-      - Restart zookeeper
+      - restart Zookeeper
 
-  - name: 'Add zookeeper bin dir to the PATH'
+  - name: Add zookeeper bin dir to the PATH
     template:
       src: zookeeper_path.sh.j2
       dest: /etc/profile.d/zookeeper_path.sh
@@ -100,7 +100,7 @@
 
   become: True
 
-- name: 'Set system service'
+- name: Set system service
   include_tasks: '{{ service_manager }}'
   with_first_found:
     - 'service/{{ ansible_service_mgr }}.yml'

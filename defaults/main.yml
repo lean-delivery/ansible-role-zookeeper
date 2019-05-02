@@ -1,6 +1,5 @@
 ---
 zk_version: 3.4.14
-zk_version_dynamic_reconfig: 3.5.0
 zk_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz'
 zk_checksum: b0ecf30e2cd83eac8de3454e06bcae28
 zk_tarball_installation: True
@@ -14,6 +13,8 @@ zk_sync_limit: 2
 zk_tick_time: 2000
 zk_autopurge_purgeInterval: 0
 zk_autopurge_snapRetainCount: 10
+# 3.5.0 and later
+zk_standalone_enabled: 'true'
 zk_data_dir: /var/lib/zookeeper
 zk_log_dir: /var/log/zookeeper
 zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
@@ -22,3 +23,6 @@ zk_tarball_dir: /opt/src
 zk_rolling_log_file_max_size: 10MB
 zk_max_rolling_log_file_count: 10
 zk_inventory_group: zookeeper
+
+zk_service_start: True
+zk_service_autostart: True

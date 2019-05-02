@@ -1,8 +1,8 @@
 ---
-- name: 'Zookeeper Installation'
+- name: Zookeeper Installation
   include_tasks: '{{ zk_install_type }}.yml'
 
-- name: 'Enable zookeeper service'
+- name: Enable zookeeper service
   service:
     name: zookeeper
     enabled: True
