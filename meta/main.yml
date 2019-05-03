@@ -11,6 +11,7 @@ galaxy_info:
     - name: "Ubuntu"
       versions:
         - "xenial"
+        - "bionic"
     - name: "EL"
       versions:
         - "7"
