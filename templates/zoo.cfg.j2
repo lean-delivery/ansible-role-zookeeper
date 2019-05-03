@@ -15,6 +15,7 @@ autopurge.snapRetainCount={{ zk_autopurge_snapRetainCount }}
 {{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_default_ipv4'].address)) }}
 {%- endfor %}
 
+{% if (zk_version is version_compare('3.5.0', '<')) %}
 {% for server in ips %}
 {% if server.host is defined %}
 {% if server.ip is defined %}
@@ -26,3 +27,4 @@ server.{{server.id}}={{server.host}}:2888:3888
 server.{{loop.index}}={{server}}:2888:3888
 {% endif %}
 {% endfor %}
+{% endif %}

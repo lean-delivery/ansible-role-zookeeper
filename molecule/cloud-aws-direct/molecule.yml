@@ -25,25 +25,10 @@ platforms:
       - rhel_family
       - zookeeper
       - zookeeper_centos
-
-  # - name: test-aws-centos6-zookeeper
-  #   image: ami-1585c46a
-  #   instance_type: m4.large
-  #   region: us-east-1
-  #   vpc_subnet_id: subnet-05a2ef2b767afec50
-  #   assign_public_ip: False
-  #   spot_price: 0.04
-  #   security_group_name:
-  #     - default
-  #   wait_timeout: 1800
-  #   ssh_user: centos
-  #   groups:
-  #     - rhel_family
-  #     - zookeeper
-  #     - zookeeper_centos
+      - package_install
 
   - name: test-aws-ubuntu16-zookeeper
-    image: ami-0f9cf087c1f27d9b1
+    image: ami-09677e0a6b14905b0
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
@@ -59,7 +44,7 @@ platforms:
       - zookeeper_ubuntu
 
   - name: test-aws-ubuntu18-zookeeper
-    image: ami-0ac019f4fcb7cb7e6
+    image: ami-012fd5eb46f56731f
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
@@ -73,6 +58,7 @@ platforms:
       - debian_family
       - zookeeper
       - zookeeper_ubuntu
+      - package_install
 
   - name: test-aws-Debian9-zookeeper
     image: ami-003f19e0e687de1cd
@@ -90,25 +76,13 @@ platforms:
       - zookeeper
       - zookeeper_ubuntu
 
-  - name: test-aws-Debian8-zookeeper
-    image: ami-49e5cb5e
-    instance_type: m5.large
-    region: us-east-1
-    vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
-    spot_price: 0.04
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    ssh_user: admin
-    groups:
-      - debian_family
-      - zookeeper
-      - zookeeper_ubuntu
-
 provisioner:
   name: ansible
   log: False
+  inventory:
+    group_vars:
+      package_install:
+        zk_tarball_installation: False
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/provisioning/AWS/prepare.yml

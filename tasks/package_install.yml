@@ -1,11 +1,11 @@
 ---
-- name: 'Load a variables'
+- name: Load variables
   include_vars: '{{ item }}'
   with_first_found:
     - '{{ ansible_os_family }}.yml'
     - default.yml
 
-- name: 'Choose platform based task '
+- name: Choose platform based task
   include_tasks: '{{ platform }}'
   with_first_found:
     - 'package_install/{{ ansible_os_family }}.yml'

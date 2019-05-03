@@ -1,8 +1,8 @@
 ---
-- name: 'Systemd script'
+- name: Systemd script
   template:
     src: zookeeper.service.j2
-    dest: /lib/systemd/system/zookeeper.service
+    dest: '/lib/systemd/system/{{ zk_service_name }}.service'
   become: True
   notify:
-    - Restart zookeeper
+    - restart Zookeeper

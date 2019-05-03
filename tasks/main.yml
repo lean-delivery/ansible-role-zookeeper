@@ -1,9 +1,19 @@
 ---
-- name: 'Zookeeper Installation'
+- name: Zookeeper Installation
   include_tasks: '{{ zk_install_type }}.yml'
 
-- name: 'Enable zookeeper service'
+- name: Enable zookeeper service
   service:
-    name: zookeeper
+    name: '{{ zk_service_name }}'
     enabled: True
   become: True
+  when:
+    - zk_service_autostart
+
+- name: Start service
+  service:
+    name: '{{ zk_service_name }}'
+    state: started
+  become: True
+  when:
+    - zk_service_start
