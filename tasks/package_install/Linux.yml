@@ -20,7 +20,7 @@
   - name: Configure zookeeper zoo.cfg and log4j config
     template:
       src: '{{ config }}.j2'
-      dest: '{{ zk_package_config_dir }}/conf/{{ config }}'
+      dest: '{{ zk_package_config_dir }}/{{ config }}'
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
     loop:
