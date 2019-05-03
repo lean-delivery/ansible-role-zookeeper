@@ -2,3 +2,5 @@
 zk_packages:
   - zookeeper
   - zookeeperd
+zk_package_config_dir: /etc/zookeeper/conf
+zk_package_myid_dir: /etc/zookeeper/conf

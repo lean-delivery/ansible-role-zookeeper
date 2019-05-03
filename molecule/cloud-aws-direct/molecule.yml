@@ -25,6 +25,7 @@ platforms:
       - rhel_family
       - zookeeper
       - zookeeper_centos
+      - package_install
 
   - name: test-aws-ubuntu16-zookeeper
     image: ami-09677e0a6b14905b0
@@ -57,6 +58,7 @@ platforms:
       - debian_family
       - zookeeper
       - zookeeper_ubuntu
+      - package_install
 
   - name: test-aws-Debian9-zookeeper
     image: ami-003f19e0e687de1cd
@@ -77,6 +79,10 @@ platforms:
 provisioner:
   name: ansible
   log: False
+  inventory:
+    group_vars:
+      package_install:
+        zk_tarball_installation: False
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/provisioning/AWS/prepare.yml

@@ -1,0 +1,34 @@
+---
+- block:
+  - name: Install required system packages
+    package:
+      name: '{{ zk_packages }}'
+      state: present
+    register: installed_packages
+    until: installed_packages is succeeded
+
+  - name: Write myid file
+    template:
+      src: myid.j2
+      dest: '{{ zk_package_myid_dir }}/myid'
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+      force: '{{ zk_force_myid }}'
+    notify:
+      - restart Zookeeper
+
+  - name: Configure zookeeper zoo.cfg and log4j config
+    template:
+      src: '{{ config }}.j2'
+      dest: '{{ zk_package_config_dir }}/conf/{{ config }}'
+      owner: '{{ zk_user }}'
+      group: '{{ zk_group }}'
+    loop:
+      - zoo.cfg
+      - log4j.properties
+    loop_control:
+      loop_var: config
+    notify:
+      - restart Zookeeper
+
+  become: True

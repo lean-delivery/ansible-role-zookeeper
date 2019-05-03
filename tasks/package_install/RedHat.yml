@@ -1,46 +1,14 @@
 ---
-- name: Install and configure Zookeeper
-  block:
-  - name: Install zookeeper repo
-    yum:
-      name: '{{ zk_redhat_yum_repositories }}'
-      state: present
-      disable_gpg_check: True
-    register: installed_repo
-    until: installed_repo is succeeded
-
-  - name: Install required system packages
-    yum:
-      name: '{{ zk_packages }}'
-      state: present
-    register: installed_packages
-    until: installed_packages is succeeded
-
-  - name: Write myid file
-    template:
-      src: myid.j2
-      dest: '{{ zk_data_dir }}/myid'
-      owner: '{{ zk_user }}'
-      group: '{{ zk_group }}'
-      force: '{{ zk_force_myid }}'
-    notify:
-      - restart Zookeeper
-
-  - name: Configure zookeeper zoo.cfg and log4j config
-    template:
-      src: '{{ config }}.j2'
-      dest: '{{ zk_dir }}/conf/{{ config }}'
-      owner: '{{ zk_user }}'
-      group: '{{ zk_group }}'
-    loop:
-      - zoo.cfg
-      - log4j.properties
-    loop_control:
-      loop_var: config
-    notify:
-      - restart Zookeeper
-
+- name: Install zookeeper repo
+  yum:
+    name: '{{ zk_redhat_yum_repositories }}'
+    state: present
+    disable_gpg_check: True
+  register: installed_repo
+  until: installed_repo is succeeded
   become: True
+
+- include_tasks: Linux.yml
 
 - name: Set system service
   include_tasks: '{{ service_manager }}'
