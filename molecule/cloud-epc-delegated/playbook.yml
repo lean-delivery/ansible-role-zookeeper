@@ -5,3 +5,5 @@
     - role: lean_delivery.java
     - role: ansible-role-zookeeper
       zk_force_myid: False
+      zk_config:
+          maxClientCnxns: 60

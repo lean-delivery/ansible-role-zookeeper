@@ -42,3 +42,7 @@ server.{{loop.index}}={{server}}:2888:3888;{{ zk_client_port }}
 {% endif %}
 {% endfor %}
 {% endif %}
+
+{% if zk_config | length %}
+{{ zk_config | to_nice_yaml | regex_replace(': ','=')}}
+{% endif %}

@@ -1,4 +1,5 @@
 ---
+zk_config: []
 zk_version: 3.4.14
 zk_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz'
 zk_tarball_installation: True
