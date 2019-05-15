@@ -3,7 +3,7 @@ zk_config: []
 zk_version: 3.4.14
 zk_config_file_list: >-
   {{ (zk_version is version_compare('3.5.0', '>=')) | ternary(
-    ['zoo.cfg', 'log4j.properties', '{{ zoo.cfg.dynamic }}'],
+    ['zoo.cfg', 'log4j.properties', zoo_cfg_dynamic],
     ['zoo.cfg', 'log4j.properties']
   )}}
 zk_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz'
