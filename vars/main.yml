@@ -2,3 +2,8 @@
 # vars file for zookeeper
 zk_install_type: '{{ zk_tarball_installation | ternary("tarball_install", "package_install") }}'
 zk_checksum: sha512
+zk_config_file_list: >-
+  {{ (zk_version is version_compare('3.5.0', '>=')) | ternary(
+    ['zoo.cfg', 'log4j.properties', 'zoo.cfg.dynamic'],
+    ['zoo.cfg', 'log4j.properties']
+  )}}

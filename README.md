@@ -123,6 +123,10 @@ Role Variables
 
     default: `True`
 
+  - `zk_reconfig_enabled` - This option is introduced such that the reconfiguration feature can be completely disabled and any attempts to reconfigure a cluster through reconfig API with or without authentication will fail by default
+
+    default: `True`
+
 Dependencies
 ------------
 

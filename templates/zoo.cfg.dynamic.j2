@@ -6,11 +6,11 @@
 {% for server in ips %}
 {% if server.host is defined %}
 {% if server.ip is defined %}
-server.{{server.id}}={{server.ip}}:2888:3888;{{ zk_client_port }}
+server.{{server.id}}={{server.ip}}:2888:3888:participant;{{ zk_client_port }}
 {% else %}
-server.{{server.id}}={{server.host}}:2888:3888;{{ zk_client_port }}
+server.{{server.id}}={{server.host}}:2888:3888:participant;{{ zk_client_port }}
 {% endif %}
 {% else %}
-server.{{loop.index}}={{server}}:2888:3888;{{ zk_client_port }}
+server.{{loop.index}}={{server}}:2888:3888:participant;{{ zk_client_port }}
 {% endif %}
 {% endfor %}
