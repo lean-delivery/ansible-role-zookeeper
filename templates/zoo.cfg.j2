@@ -10,12 +10,12 @@ autopurge.purgeInterval={{ zk_autopurge_purgeInterval }}
 autopurge.snapRetainCount={{ zk_autopurge_snapRetainCount }}
 {% endif %}
 
+{% if (zk_version is version_compare('3.5.0', '<')) %}
 {%- set ips = [] %}
 {%- for host in groups[zk_inventory_group] %}
 {{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_default_ipv4'].address)) }}
 {%- endfor %}
 
-{% if (zk_version is version_compare('3.5.0', '<')) %}
 {% for server in ips %}
 {% if server.host is defined %}
 {% if server.ip is defined %}
@@ -29,20 +29,12 @@ server.{{loop.index}}={{server}}:2888:3888
 {% endfor %}
 {% endif %}
 
-{% if (zk_version is version_compare('3.5.0', '>')) %}
-{% for server in ips %}
-{% if server.host is defined %}
-{% if server.ip is defined %}
-server.{{server.id}}={{server.ip}}:2888:3888;{{ zk_client_port }}
-{% else %}
-server.{{server.id}}={{server.host}}:2888:3888;{{ zk_client_port }}
-{% endif %}
-{% else %}
-server.{{loop.index}}={{server}}:2888:3888;{{ zk_client_port }}
-{% endif %}
-{% endfor %}
-{% endif %}
-
 {% if zk_config | length %}
 {{ zk_config | to_nice_yaml | regex_replace(': ','=')}}
+{% endif %}
+
+{% if (zk_version is version_compare('3.5.0', '>=')) %}
+dynamicConfigFile={{ zk_dir }}/conf/{{ zoo_cfg_dynamic }}
+reconfigEnabled={{ zk_reconfig_enabled }}
+standaloneEnabled={{ zk_standalone_enabled }}
 {% endif %}
