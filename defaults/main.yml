@@ -24,7 +24,7 @@ zk_standalone_enabled: 'true'
 zk_data_dir: /var/lib/zookeeper
 zk_log_dir: /var/log/zookeeper
 zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
-zoo_cfg_dynamic : 'zoo.cfg.dynamic'
+zoo_cfg_dynamic: 'zoo.cfg.dynamic'
 zk_force_myid: True
 zk_tarball_dir: /opt/src
 zk_rolling_log_file_max_size: 10MB
