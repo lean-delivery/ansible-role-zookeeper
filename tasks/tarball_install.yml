@@ -97,6 +97,15 @@
     notify:
       - restart Zookeeper
 
+  - name: Read config file
+    slurp:
+      src: '{{ zk_dir }}/conf/zoo.cfg'
+    register: zooconfig
+
+  - name: Debug config file
+    debug:
+      var: zooconfig
+
   - name: Add zookeeper bin dir to the PATH
     template:
       src: zookeeper_path.sh.j2
@@ -112,3 +121,21 @@
     - service/systemv.yml
   loop_control:
     loop_var: service_manager
+
+- name: restart Zookeeper
+  systemd:
+    name: zookeeper
+    state: restarted
+  become: true
+  when:
+    - zk_service_start
+
+- name: Read config file2
+  slurp:
+    src: '{{ zk_dir }}/conf/zoo.cfg'
+  register: zooconfig2
+  become: true
+
+- name: Debug config file2
+  debug:
+    var: zooconfig2
