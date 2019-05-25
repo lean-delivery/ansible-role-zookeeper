@@ -85,7 +85,7 @@
     notify:
       - restart Zookeeper
 
-  - name: Configure zookeeper zoo.cfg and log4j
+  - name: Add zookeeper config files
     template:
       src: '{{ config }}.j2'
       dest: '{{ zk_dir }}/conf/{{ config }}'
