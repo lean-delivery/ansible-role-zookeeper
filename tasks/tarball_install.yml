@@ -4,13 +4,13 @@
   - name: Group creation
     group:
       name: '{{ zk_group }}'
-      system: True
+      system: true
 
   - name: User creation
     user:
       name: '{{ zk_user }}'
       group: '{{ zk_group }}'
-      system: True
+      system: true
 
   - name: 'Ensure the tarball dir exists at {{ zk_tarball_dir }}'
     file:
@@ -55,7 +55,7 @@
 
   - name: Unpack tarball
     unarchive:
-      remote_src: True
+      remote_src: true
       src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
       dest: '{{ zk_dir }}'
       extra_opts: '--strip-components=1'
@@ -103,7 +103,7 @@
       dest: /etc/profile.d/zookeeper_path.sh
       mode: 0755
 
-  become: True
+  become: true
 
 - name: Set system service
   include_tasks: '{{ service_manager }}'

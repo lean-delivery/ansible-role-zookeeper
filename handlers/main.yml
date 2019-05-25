@@ -3,6 +3,6 @@
   systemd:
     name: zookeeper
     state: restarted
-  become: True
+  become: true
   when:
     - zk_service_start

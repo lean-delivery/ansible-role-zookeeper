@@ -37,7 +37,7 @@ Role Variables
 
  - `zk_tarball_installation` - installation from tarball(or repository)
 
-    default: `True`
+    default: `true`
 
  - `zk_user` - OS user name for zookeeper
 
@@ -93,7 +93,7 @@ Role Variables
 
  - `zk_force_myid` - to reset id
 
-    default: `True`
+    default: `true`
 
  - `zk_tarball_dir` - place where you download tarball
 
@@ -117,20 +117,33 @@ Role Variables
 
   - `zk_service_start` - to start zookeeper service in the end of role/Playbook
 
-    default: `True`
+    default: `true`
 
   - `zk_service_autostart` - Add zookeeper service to automatically start.
 
-    default: `True`
+    default: `true`
 
   - `zk_reconfig_enabled` - This option is introduced such that the reconfiguration feature can be completely disabled and any attempts to reconfigure a cluster through reconfig API with or without authentication will fail by default
 
-    default: `True`
+    default: `true`
 
 Dependencies
 ------------
 
 https://github.com/lean-delivery/ansible-role-java
+
+Example Inventory
+----------------
+```ini
+ [zookeeper]
+ zookeeper1 zk_server_role=participant
+ zookeeper2 zk_server_role=observer
+ zookeeper3
+ ```
+
+  - `zk_server_role` - zookeeper server role. Host variable. Variables: participant, observer
+
+    default:  participant
 
 Example Playbook
 ----------------

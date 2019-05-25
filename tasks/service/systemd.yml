@@ -3,6 +3,6 @@
   template:
     src: zookeeper.service.j2
     dest: '/lib/systemd/system/{{ zk_service_name }}.service'
-  become: True
+  become: true
   notify:
     - restart Zookeeper

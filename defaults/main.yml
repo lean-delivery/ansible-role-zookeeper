@@ -2,7 +2,7 @@
 zk_config: []
 zk_version: 3.4.14
 zk_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz'
-zk_tarball_installation: True
+zk_tarball_installation: true
 zk_user: zookeeper
 zk_group: zookeeper
 zk_debian_apt_repositories: 'deb http://us-east1.gce.archive.ubuntu.com/ubuntu/ bionic universe'
@@ -19,12 +19,12 @@ zk_standalone_enabled: 'true'
 zk_data_dir: /var/lib/zookeeper
 zk_log_dir: /var/log/zookeeper
 zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
-zk_force_myid: True
+zk_force_myid: true
 zk_tarball_dir: /opt/src
 zk_rolling_log_file_max_size: 10MB
 zk_max_rolling_log_file_count: 10
 zk_inventory_group: zookeeper
 
 zk_service_name: zookeeper
-zk_service_start: True
-zk_service_autostart: True
+zk_service_start: true
+zk_service_autostart: true

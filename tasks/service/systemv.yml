@@ -3,6 +3,6 @@
   template:
     src: zookeeper.conf.j2
     dest: '/etc/init/{{ zk_service_name }}.conf'
-  become: True
+  become: true
   notify:
     - restart Zookeeper

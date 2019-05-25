@@ -10,6 +10,10 @@ autopurge.purgeInterval={{ zk_autopurge_purgeInterval }}
 autopurge.snapRetainCount={{ zk_autopurge_snapRetainCount }}
 {% endif %}
 
+{% if zk_config | length %}
+{{ zk_config | to_nice_yaml | regex_replace(': ','=')}}
+{% endif %}
+
 {% if (zk_version is version_compare('3.5.0', '<')) %}
 {%- set ips = [] %}
 {%- for host in groups[zk_inventory_group] %}
@@ -27,10 +31,6 @@ server.{{server.id}}={{server.host}}:2888:3888
 server.{{loop.index}}={{server}}:2888:3888
 {% endif %}
 {% endfor %}
-{% endif %}
-
-{% if zk_config | length %}
-{{ zk_config | to_nice_yaml | regex_replace(': ','=')}}
 {% endif %}
 
 {% if (zk_version is version_compare('3.5.0', '>=')) %}

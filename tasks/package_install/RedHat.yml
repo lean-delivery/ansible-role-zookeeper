@@ -3,10 +3,10 @@
   yum:
     name: '{{ zk_redhat_yum_repositories }}'
     state: present
-    disable_gpg_check: True
+    disable_gpg_check: true
   register: installed_repo
   until: installed_repo is succeeded
-  become: True
+  become: true
 
 - include_tasks: Linux.yml
 
