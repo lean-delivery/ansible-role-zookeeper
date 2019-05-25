@@ -148,21 +148,3 @@
     - service/systemv.yml
   loop_control:
     loop_var: service_manager
-
-# - name: restart Zookeeper
-#   systemd:
-#     name: zookeeper
-#     state: restarted
-#   become: true
-#   when:
-#     - zk_service_start
-#
-# - name: Read config file2
-#   slurp:
-#     src: '{{ zk_dir }}/conf/zoo.cfg.dynamic'
-#   register: zooconfig2
-#   become: true
-#
-# - name: Debug config file2
-#   debug:
-#     msg: '{{ zooconfig2["content"] | b64decode }}'

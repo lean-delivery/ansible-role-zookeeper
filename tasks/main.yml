@@ -17,3 +17,22 @@
   become: true
   when:
     - zk_service_start
+
+- name: get service state
+  shell: systemctl status zookeeper
+  become: True
+  register: zkservice
+
+- name: Debug service
+  debug:
+    var: zkservice
+
+- name: Read config file2
+  slurp:
+    src: '{{ zk_dir }}/conf/zoo.cfg'
+  register: zooconfig2
+  become: true
+
+- name: Debug config file2
+  debug:
+    msg: '{{ zooconfig2["content"] | b64decode }}'
