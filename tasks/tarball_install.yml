@@ -99,7 +99,7 @@
 
   - name: Read config file
     slurp:
-      src: '{{ zk_dir }}/conf/zoo.cfg'
+      src: '{{ zk_dir }}/conf/zoo.cfg.dynamic'
     register: zooconfig
 
   - name: Debug config file
@@ -132,7 +132,7 @@
 
 - name: Read config file2
   slurp:
-    src: '{{ zk_dir }}/conf/zoo.cfg'
+    src: '{{ zk_dir }}/conf/zoo.cfg.dynamic'
   register: zooconfig2
   become: true
 
