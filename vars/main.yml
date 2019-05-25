@@ -12,4 +12,4 @@ zk_url_postfix: '{{ (zk_version is version_compare("3.5.0", ">=") | ternary("-bi
 zk_root_url: 'http://www.us.apache.org/dist/zookeeper'
 zk_version_url: '{{ zk_root_url }}/zookeeper-{{zk_version}}'
 zk_file_url: '{{ zk_url_preffix }}zookeeper-{{zk_version}}{{ zk_url_postfix }}.tar.gz'
-default_zk_url: '{{ zk_root_url }}/{{ zk_version_url }}/{{ zk_file_url }}'
+default_zk_url: '{{ zk_version_url }}/{{ zk_file_url }}'
