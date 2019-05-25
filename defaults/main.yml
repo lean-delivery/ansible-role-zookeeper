@@ -20,6 +20,7 @@ zk_data_dir: /var/lib/zookeeper
 zk_log_dir: /var/log/zookeeper
 zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
 zk_force_myid: true
+zk_force_config: true
 zk_tarball_dir: /opt/src
 zk_rolling_log_file_max_size: 10MB
 zk_max_rolling_log_file_count: 10

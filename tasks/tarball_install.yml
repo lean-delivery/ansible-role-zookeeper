@@ -85,53 +85,18 @@
     notify:
       - restart Zookeeper
 
-  # - name: Add zookeeper config files
-  #   template:
-  #     src: '{{ config }}.j2'
-  #     dest: '{{ zk_dir }}/conf/{{ config }}'
-  #     owner: '{{ zk_user }}'
-  #     group: '{{ zk_group }}'
-  #   loop: '{{ zk_config_file_list }}'
-  #   loop_control:
-  #     loop_var: config
-  #   notify:
-  #     - restart Zookeeper
-
-  - name: Add zookeeper config files log4j.properties
+  - name: Add zookeeper config files
     template:
-      src: log4j.properties.j2
-      dest: '{{ zk_dir }}/conf/log4j.properties'
+      src: '{{ config }}.j2'
+      dest: '{{ zk_dir }}/conf/{{ config }}'
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
+      force: '{{ zk_force_config }}'
+    loop: '{{ zk_config_file_list }}'
+    loop_control:
+      loop_var: config
     notify:
       - restart Zookeeper
-
-  - name: Add zookeeper config files zoo.cfg
-    template:
-      src: zoo.cfg.j2
-      dest: '{{ zk_dir }}/conf/zoo.cfg'
-      owner: '{{ zk_user }}'
-      group: '{{ zk_group }}'
-    notify:
-      - restart Zookeeper
-
-  - name: Add zookeeper config files zoo.cfg.dynamic
-    template:
-      src: zoo.cfg.dynamic.j2
-      dest: '{{ zk_dir }}/conf/zoo.cfg.dynamic'
-      owner: '{{ zk_user }}'
-      group: '{{ zk_group }}'
-    notify:
-      - restart Zookeeper
-
-  # - name: Read config file
-  #   slurp:
-  #     src: '{{ zk_dir }}/conf/zoo.cfg.dynamic'
-  #   register: zooconfig
-  #
-  # - name: Debug config file
-  #   debug:
-  #     msg: '{{ zooconfig["content"] | b64decode }}'
 
   - name: Add zookeeper bin dir to the PATH
     template:

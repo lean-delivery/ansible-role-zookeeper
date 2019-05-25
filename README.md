@@ -97,6 +97,10 @@ Role Variables
 
     default: `true`
 
+ - `zk_force_config` - to rewrite config files
+
+    default: `true`
+
  - `zk_tarball_dir` - place where you download tarball
 
     default: `/opt/src`

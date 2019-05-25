@@ -17,20 +17,3 @@
   become: true
   when:
     - zk_service_start
-
-- name: Populate service facts
-  service_facts:
-
-- name: Debug service
-  debug:
-    var: ansible_facts.services
-
-- name: Read config file2
-  slurp:
-    src: '{{ zk_dir }}/conf/zoo.cfg'
-  register: zooconfig2
-  become: true
-
-- name: Debug config file2
-  debug:
-    msg: '{{ zooconfig2["content"] | b64decode }}'
