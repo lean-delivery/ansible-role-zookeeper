@@ -104,7 +104,7 @@
 
   - name: Debug config file
     debug:
-      var: zooconfig
+      msg: '{{ zooconfig["content"] | b64decode }}'
 
   - name: Add zookeeper bin dir to the PATH
     template:
@@ -138,4 +138,4 @@
 
 - name: Debug config file2
   debug:
-    var: zooconfig2
+    msg: '{{ zooconfig2["content"] | b64decode }}'
