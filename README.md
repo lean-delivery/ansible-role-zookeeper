@@ -33,7 +33,9 @@ Role Variables
 
  - `zk_url` - download url
 
-    default: `http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz`
+    default: `http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz` for versions < 3.5
+
+    default: `http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/apache-zookeeper-{{zk_version}}-bin.tar.gz` for versions 3.5.x
 
  - `zk_tarball_installation` - installation from tarball(or repository)
 
