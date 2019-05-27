@@ -28,7 +28,7 @@ platforms:
       - zookeeper_ubuntu
 provisioner:
   name: ansible
-  log: True
+  log: true
   playbooks:
     create: ../resources/provisioning/EPC/create.yml
     prepare: ../resources/provisioning/EPC/prepare.yml

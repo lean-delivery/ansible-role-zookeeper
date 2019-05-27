@@ -1,0 +1,16 @@
+{%- set ips = [] %}
+{%- for host in groups[zk_inventory_group] %}
+{{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_default_ipv4'].address, role=hostvars[host]['zk_server_role'])) }}
+{%- endfor %}
+
+{% for server in ips %}
+{% if server.host is defined %}
+{% if server.ip is defined %}
+server.{{server.id}}={{server.ip}}:2888:3888:{{ server.role | default ("participant") }};{{ zk_client_port }}
+{% else %}
+server.{{server.id}}={{server.host}}:2888:3888:{{ server.role | default ("participant") }};{{ zk_client_port }}
+{% endif %}
+{% else %}
+server.{{loop.index}}={{server}}:2888:3888:{{ server.role | default ("participant") }};{{ zk_client_port }}
+{% endif %}
+{% endfor %}

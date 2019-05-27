@@ -15,7 +15,7 @@ platforms:
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     spot_price: 0.04
     security_group_name:
       - default
@@ -32,7 +32,7 @@ platforms:
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     security_group_name:
       - default
     spot_price: 0.04
@@ -48,7 +48,7 @@ platforms:
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     security_group_name:
       - default
     spot_price: 0.04
@@ -65,7 +65,7 @@ platforms:
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     spot_price: 0.04
     security_group_name:
       - default
@@ -78,11 +78,11 @@ platforms:
 
 provisioner:
   name: ansible
-  log: False
+  log: false
   inventory:
     group_vars:
       package_install:
-        zk_tarball_installation: False
+        zk_tarball_installation: false
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/provisioning/AWS/prepare.yml

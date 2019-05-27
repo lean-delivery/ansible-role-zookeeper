@@ -23,12 +23,10 @@
       dest: '{{ zk_package_config_dir }}/{{ config }}'
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
-    loop:
-      - zoo.cfg
-      - log4j.properties
+    loop: '{{ zk_config_file_list }}'
     loop_control:
       loop_var: config
     notify:
       - restart Zookeeper
 
-  become: True
+  become: true
