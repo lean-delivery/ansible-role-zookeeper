@@ -2,7 +2,7 @@
 zk_config: []
 zk_version: 3.4.14
 zk_url: '{{ default_zk_url }}'
-zk_tarball_installation: true
+zk_tarball_installation: false
 zk_user: zookeeper
 zk_group: zookeeper
 zk_debian_apt_repositories: 'deb http://us-east1.gce.archive.ubuntu.com/ubuntu/ bionic universe'
@@ -16,9 +16,8 @@ zk_autopurge_snapRetainCount: 10
 # 3.5.0 and later
 zk_reconfig_enabled: 'true'
 zk_standalone_enabled: 'true'
-zk_data_dir: /var/lib/zookeeper
-zk_log_dir: /var/log/zookeeper
-zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
+#zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
+zk_dir: 'C:\tools\zookeeper-3.4.9\'
 zk_force_myid: true
 zk_force_config: true
 zk_tarball_dir: /opt/src
@@ -29,3 +28,7 @@ zk_inventory_group: zookeeper
 zk_service_name: zookeeper
 zk_service_start: true
 zk_service_autostart: true
+transport: 'choko'
+# avaible transport are 
+# - choko
+# - archive

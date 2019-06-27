@@ -5,3 +5,6 @@ zk_packages:
   - zookeeper
 zk_package_config_dir: '{{ zk_dir }}/conf'
 zk_package_myid_dir: '{{ zk_data_dir }}'
+zk_data_dir: /var/lib/zookeeper
+zk_log_dir: /var/log/zookeeper
+zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'

@@ -1,0 +1,6 @@
+---
+zk_package_config_dir: '{{ zk_dir }}/conf'
+zk_package_myid_dir: '{{ zk_data_dir }}/data'
+zk_data_dir: C:\tools\zookeeper-3.4.9\
+zk_log_dir: C:\tools\zookeeper-3.4.9\logs\
+zk_dir: 'C:\tools\zookeeper-3.4.9\'

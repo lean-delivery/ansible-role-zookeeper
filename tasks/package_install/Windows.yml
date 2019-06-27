@@ -1,0 +1,47 @@
+---
+- name: 'Fetch zookeeper artifact with {{ transport }} transport'
+  include_tasks: '{{ transport_driver }}'
+  with_first_found:
+    - 'Win/{{ transport }}.yml'
+    - 'Win/unknown-transport.yml'
+  loop_control:
+    loop_var: transport_driver
+
+- name: Create directory structure
+  win_file:
+    path: C:\Temp\folder\subfolder
+    state: directory
+
+- name: Set an environment variable zookeperhome
+  win_environment:
+    state: present
+    name: ZOOKEEPER_HOME
+    value: '{{ zk_dir }}'
+    level: machine
+
+- name: Set an environment variable zookeperhome
+  win_environment:
+    state: present
+    name: Path
+    value: '%ZOOKEEPER_HOME%\bin;C:\Program Files\Internet Explorer;;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;'
+    level: machine
+
+- name: Create directory structure
+  win_file:
+    path: '{{ zk_package_myid_dir }}/data'
+    state: directory
+
+- name: Write myid file
+  win_template:
+    src: myid.j2
+    dest: '{{ zk_package_myid_dir }}'
+
+- name: Configure zookeeper zoo.cfg and log4j config
+  win_template:
+    src: '{{ config }}.j2'
+    dest: '{{ zk_package_config_dir }}/{{ config }}'
+  loop: '{{ zk_config_file_list }}'
+  loop_control:
+    loop_var: config
+
+
