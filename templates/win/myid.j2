@@ -1,0 +1,15 @@
+{%- set ips = [] %}
+{%- for host in groups[zk_inventory_group] %}
+{{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_default_ipv4'].address)) }}
+{%- endfor %}
+{% for server in ips %}
+{% if server.host is defined %}
+{% if server.host == inventory_hostname %}
+{{ server.id }}
+{% endif %}
+{% else %}
+{% if server == inventory_hostname %}
+{{ loop.index }}
+{% endif %}
+{% endif %}
+{% endfor %}

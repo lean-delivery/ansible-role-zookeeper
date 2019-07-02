@@ -1,0 +1,43 @@
+tickTime={{ zk_tick_time }}
+dataDir={{ zk_data_dir }}
+dataLogDir={{ zk_log_dir }}
+initLimit={{ zk_init_limit }}
+syncLimit={{ zk_sync_limit }}
+{% if zk_autopurge_purgeInterval > 0 %}
+autopurge.purgeInterval={{ zk_autopurge_purgeInterval }}
+autopurge.snapRetainCount={{ zk_autopurge_snapRetainCount }}
+{% endif %}
+{% if (zk_version is version_compare('3.5.0', '>=')) %}
+{% if zk_tarball_installation %}
+dynamicConfigFile={{ zk_dir }}/conf/zoo.cfg.dynamic
+{% else %}
+dynamicConfigFile={{ zk_package_config_dir }}/zoo.cfg.dynamic
+{% endif %}
+reconfigEnabled={{ zk_reconfig_enabled }}
+standaloneEnabled={{ zk_standalone_enabled }}
+{% endif %}
+{% if zk_config | length %}
+{{ zk_config | to_nice_yaml | regex_replace(': ','=')}}
+{% endif %}
+{% if (zk_version is version_compare('3.5.0', '<')) %}
+clientPort={{ zk_client_port }}
+{% endif %}
+
+{% if (zk_version is version_compare('3.5.0', '<')) %}
+{%- set ips = [] %}
+{%- for host in groups[zk_inventory_group] %}
+{{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_default_ipv4'].address)) }}
+{%- endfor %}
+
+{% for server in ips %}
+{% if server.host is defined %}
+{% if server.ip is defined %}
+server.{{server.id}}={{server.ip}}:2888:3888
+{% else %}
+server.{{server.id}}={{server.host}}:2888:3888
+{% endif %}
+{% else %}
+server.{{loop.index}}={{server}}:2888:3888
+{% endif %}
+{% endfor %}
+{% endif %}

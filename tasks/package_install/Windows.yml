@@ -23,7 +23,7 @@
   win_environment:
     state: present
     name: Path
-    value: '%ZOOKEEPER_HOME%\bin;C:\Program Files\Internet Explorer;;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;'
+    value: 'C:\ProgramData\chocolatey\bin;%ZOOKEEPER_HOME%\bin;C:\Program Files\Internet Explorer;;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;'
     level: machine
 
 - name: Create directory structure
@@ -33,15 +33,13 @@
 
 - name: Write myid file
   win_template:
-    src: myid.j2
+    src: win/myid.j2
     dest: '{{ zk_package_myid_dir }}'
 
 - name: Configure zookeeper zoo.cfg and log4j config
   win_template:
-    src: '{{ config }}.j2'
+    src: 'win/{{ config }}.j2'
     dest: '{{ zk_package_config_dir }}/{{ config }}'
   loop: '{{ zk_config_file_list }}'
   loop_control:
     loop_var: config
-
-
