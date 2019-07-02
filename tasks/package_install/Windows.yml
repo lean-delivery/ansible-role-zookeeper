@@ -20,10 +20,9 @@
     level: machine
 
 - name: Set an environment variable zookeperhome
-  win_environment:
+  win_path:
+    elements: '%ZOOKEEPER_HOME%\bin'
     state: present
-    name: Path
-    value: 'C:\ProgramData\chocolatey\bin;%ZOOKEEPER_HOME%\bin;C:\Program Files\Internet Explorer;;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;'
     level: machine
 
 - name: Create directory structure
