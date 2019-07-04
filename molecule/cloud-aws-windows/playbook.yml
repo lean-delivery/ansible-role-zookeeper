@@ -4,3 +4,4 @@
   roles:
     - role: lean_delivery.java
     - role: ansible-role-zookeeper
+      zk_tarball_installation: false
