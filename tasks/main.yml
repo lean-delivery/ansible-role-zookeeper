@@ -1,19 +1,16 @@
 ---
-- name: Zookeeper Installation
-  include_tasks: '{{ zk_install_type }}.yml'
+- name: Load a system variables file based on distribution or OS family
+  include_vars: '{{ distribution }}'
+  with_first_found:
+    - '{{ ansible_system }}.yml'
+    - default.yml
+  loop_control:
+    loop_var: distribution
 
-- name: Enable zookeeper service
-  service:
-    name: '{{ zk_service_name }}'
-    enabled: true
-  become: true
-  when:
-    - zk_service_autostart
-
-- name: Start service
-  service:
-    name: '{{ zk_service_name }}'
-    state: started
-  become: true
-  when:
-    - zk_service_start
+- name: Choose platform based task
+  include_tasks: '{{ platform }}'
+  with_first_found:
+    - '{{ ansible_system }}/system.yml'
+    - not-supported.yml
+  loop_control:
+    loop_var: platform

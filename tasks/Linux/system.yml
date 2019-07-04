@@ -1,0 +1,28 @@
+---
+- name: Debug
+  debug:
+    msg: 'Linux instalaltion'
+
+- name: Zookeeper Installation
+  include_tasks: '{{ zk_install_type }}.yml'
+
+- name: Enable zookeeper service
+  service:
+    name: '{{ zk_service_name }}'
+    enabled: true
+  register: dbg
+  become: true
+  when:
+    - zk_service_autostart
+
+- name: Debug
+  debug:
+    msg: '{{ dbg }}'
+
+- name: Start service
+  service:
+    name: '{{ zk_service_name }}'
+    state: started
+  become: true
+  when:
+    - zk_service_start
