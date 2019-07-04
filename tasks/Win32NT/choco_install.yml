@@ -1,0 +1,13 @@
+---
+- name: Check choco
+  win_chocolatey:
+    name: chocolatey
+    state: present
+
+- name: Install zookeeper from chocolatey
+  win_chocolatey:
+    name: apache-zookeeper
+  register: choco_install
+  retries: 15
+  delay: 5
+  until: choco_install is succeeded

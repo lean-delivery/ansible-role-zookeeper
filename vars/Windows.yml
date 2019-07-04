@@ -1,0 +1,2 @@
+---
+zk_install_type: '{{ zk_tarball_installation | ternary("tarball_install", "choco_install") }}'

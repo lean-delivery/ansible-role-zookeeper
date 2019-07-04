@@ -1,8 +1,4 @@
 ---
-- name: Debug
-  debug:
-    msg: 'Linux instalaltion'
-
 - name: Zookeeper Installation
   include_tasks: '{{ zk_install_type }}.yml'
 

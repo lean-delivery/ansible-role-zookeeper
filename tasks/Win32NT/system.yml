@@ -1,4 +1,7 @@
 ---
 - name: Debug
   debug:
-    msg: 'Windows instalaltion'
+    msg: 'Windows installation'
+
+- name: Zookeeper Installation
+  include_tasks: '{{ zk_install_type }}.yml'
