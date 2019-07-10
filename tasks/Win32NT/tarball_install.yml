@@ -1,2 +1,33 @@
 ---
 # install zookeeper from tarball
+- name: Create log directory
+  win_file:
+      path: '{{zk_default_tarball_dir}}'
+      state: directory
+
+- name: Creates directory
+  win_file:
+    path: '{{ zk_dir }}'
+    state: directory
+
+- name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
+  set_fact:
+    sha_value: '{{ sha_url_item }}'
+  with_url: '{{ zk_url }}.{{ zk_checksum }}'
+  loop_control:
+    loop_var: sha_url_item
+
+- name: 'Download zookeeper version {{ zk_version }}'
+  win_get_url:
+    url: '{{ zk_url }}'
+    dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+    checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
+  register: result
+  until: result is succeeded
+  retries: 10
+  delay: 2
+
+- name: Unzip a bz2 (BZip) file
+  win_unzip:
+    src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+    dest: '{{ zk_dir }}'

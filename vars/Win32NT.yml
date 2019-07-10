@@ -1,2 +1,7 @@
 ---
 zk_install_type: '{{ zk_tarball_installation | ternary("tarball_install", "choco_install") }}'
+zk_default_dir: '{{ zk_tarball_installation | ternary("C:\\tools\\zookeeper-3.4.9", "C:\\tools\\zookeeper-" + zk_version) }}'
+zk_package_config_dir: '{{zk_default_dir}}\conf'
+zk_default_log_dir: 'C:\LOG'
+zk_default_data_dir: '{{ zk_tarball_installation | ternary("C:\\tools\\zookeeper-3.4.9", "C:\\tools\\zookeeper-" + zk_version) }}'
+zk_default_tarball_dir: 'C:\temp'
