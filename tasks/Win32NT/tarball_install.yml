@@ -2,7 +2,7 @@
 # install zookeeper from tarball
 - name: Create log directory
   win_file:
-      path: '{{zk_default_tarball_dir}}'
+      path: '{{ zk_default_tarball_dir }}'
       state: directory
 
 - name: Creates directory

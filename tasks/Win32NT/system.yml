@@ -21,7 +21,7 @@
 
 - name: Create log directory
   win_file:
-      path: '{{zk_default_log_dir}}'
+      path: '{{ zk_default_log_dir }}'
       state: directory
 
 - name: Configure zookeeper zoo.cfg config
@@ -43,7 +43,6 @@
     state: started
     start_mode: auto
 
-
 #- name: Configure zookeeper zoo.cfg and log4j config
 #  win_template:
 #    src: '{{ config }}.j2'
@@ -51,4 +50,3 @@
 #  loop: '{{ zk_config_file_list }}'
 #  loop_control:
 #    loop_var: config
-
