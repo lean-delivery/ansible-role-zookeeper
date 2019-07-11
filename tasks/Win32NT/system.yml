@@ -36,9 +36,9 @@
 
 - name: Create a new service with extra details
   win_service:
-    name: zkserver_service7
-    path: 'C:\tools\zookeeper-3.4.9\bin\zkServer.cmd'
-    display_name: Zookeperserver7
+    name: zkserver_service
+    path: 'C:\Windows\System32\cmd.exe /k zkServer'
+    display_name: Zookeperserver
     username: NetworkService
     state: started
     start_mode: auto

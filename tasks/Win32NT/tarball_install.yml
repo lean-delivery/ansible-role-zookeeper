@@ -20,14 +20,41 @@
 - name: 'Download zookeeper version {{ zk_version }}'
   win_get_url:
     url: '{{ zk_url }}'
-    dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+    dest: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
     checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
   register: result
   until: result is succeeded
   retries: 10
   delay: 2
 
+- name: Install PSCX
+  win_psmodule:
+    name: Pscx
+    state: present
+    allow_clobber: true
+
 - name: Unzip a bz2 (BZip) file
   win_unzip:
-    src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+    src: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
+    dest: '{{ zk_default_tarball_dir }}'
+#    delete_archive: true
+    recurse: true
+
+#- name: Unzip a bz2 (BZip) file
+#  win_unzip:
+#    src: '{{ zk_default_tarball_dir }}/zookeeper-{{ zk_version }}.tar'
+#    dest: '{{ zk_default_tarball_dir }}'
+#    delete_archive: yes
+
+- name: Find zookeeper_folder in temp
+  win_find:
+    paths: '{{ zk_default_tarball_dir }}'
+    recurse: false
+    file_type: directory
+  register: zoo_temp_folder
+
+- name: Copy from temporary directory
+  win_copy:
+    src: '{{ zoo_temp_folder.files | map(attribute="path") | list | last }}\'
     dest: '{{ zk_dir }}'
+    remote_src: true
