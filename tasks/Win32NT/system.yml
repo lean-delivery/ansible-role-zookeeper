@@ -34,19 +34,13 @@
     src: 'log4j.properties.j2'
     dest: '{{ zk_package_config_dir }}/log4j.properties'
 
-- name: Create a new service with extra details
-  win_service:
-    name: zkserver_service
-    path: 'C:\Windows\System32\cmd.exe /k zkServer'
-    display_name: Zookeperserver
-    username: NetworkService
-    state: started
-    start_mode: auto
+- name: "Create a service via nssm"
+  win_nssm:
+    name: "zk"
+    application: '{{ zk_dir }}/bin/zkserver.cmd'
+    state: present
 
-#- name: Configure zookeeper zoo.cfg and log4j config
-#  win_template:
-#    src: '{{ config }}.j2'
-#    dest: '{{ zk_package_config_dir }}/{{ config }}'
-#  loop: '{{ zk_config_file_list }}'
-#  loop_control:
-#    loop_var: config
+- name: "Start the service"
+  win_service:
+    name: 'zk'
+    state: started

@@ -10,6 +10,26 @@
     path: '{{ zk_dir }}'
     state: directory
 
+- name: 'Download nssm'
+  win_get_url:
+    url: 'https://nssm.cc/release/nssm-2.24.zip'
+    dest: '{{ zk_tarball_dir }}/nssm-2.24.zip'
+  register: result
+  until: result is succeeded
+  retries: 10
+  delay: 2
+
+- name: Set path for nssm
+  win_path:
+    elements: 'c:\Program Files\nssm-2.24\win64\'
+    state: present
+    level: machine
+
+- name: Unzip nssm file
+  win_unzip:
+    src: '{{ zk_tarball_dir }}/nssm-2.24.zip'
+    dest: '{{ nssm_dir }}'
+
 - name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
   set_fact:
     sha_value: '{{ sha_url_item }}'
@@ -37,14 +57,7 @@
   win_unzip:
     src: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
     dest: '{{ zk_default_tarball_dir }}'
-#    delete_archive: true
     recurse: true
-
-#- name: Unzip a bz2 (BZip) file
-#  win_unzip:
-#    src: '{{ zk_default_tarball_dir }}/zookeeper-{{ zk_version }}.tar'
-#    dest: '{{ zk_default_tarball_dir }}'
-#    delete_archive: yes
 
 - name: Find zookeeper_folder in temp
   win_find:
