@@ -1,8 +1,13 @@
 ---
 # install zookeeper from tarball
+- name: check if '{{ zk_default_dir }}' folder existrs
+  win_stat:
+    path: '{{ zk_default_dir }}'
+  register: zk_folder
+
 - name: Create log directory
   win_file:
-      path: '{{ zk_default_tarball_dir }}'
+      path: '{{ zk_default_log_dir }}'
       state: directory
 
 - name: Creates directory
@@ -10,42 +15,10 @@
     path: '{{ zk_dir }}'
     state: directory
 
-- name: 'Download nssm'
-  win_get_url:
-    url: 'https://nssm.cc/release/nssm-2.24.zip'
-    dest: '{{ zk_tarball_dir }}/nssm-2.24.zip'
-  register: result
-  until: result is succeeded
-  retries: 10
-  delay: 2
-
-- name: Set path for nssm
-  win_path:
-    elements: 'c:\Program Files\nssm-2.24\win64\'
+- name: "Install nssm"
+  win_chocolatey:
+    name: nssm
     state: present
-    level: machine
-
-- name: Unzip nssm file
-  win_unzip:
-    src: '{{ zk_tarball_dir }}/nssm-2.24.zip'
-    dest: '{{ nssm_dir }}'
-
-- name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
-  set_fact:
-    sha_value: '{{ sha_url_item }}'
-  with_url: '{{ zk_url }}.{{ zk_checksum }}'
-  loop_control:
-    loop_var: sha_url_item
-
-- name: 'Download zookeeper version {{ zk_version }}'
-  win_get_url:
-    url: '{{ zk_url }}'
-    dest: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
-    checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
-  register: result
-  until: result is succeeded
-  retries: 10
-  delay: 2
 
 - name: Install PSCX
   win_psmodule:
@@ -53,11 +26,36 @@
     state: present
     allow_clobber: true
 
+- name: check if '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz' exists
+  win_stat:
+    path: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+  register: zk_tar
+
+- name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
+  set_fact:
+    sha_value: '{{ sha_url_item }}'
+  with_url: '{{ zk_url }}.{{ zk_checksum }}'
+  loop_control:
+    loop_var: sha_url_item
+  when: not zk_tar.stat.exists
+
+- name: 'Download zookeeper version {{ zk_version }}'
+  win_get_url:
+    url: '{{ zk_url }}'
+    dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+    checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
+  register: result
+  until: result is succeeded
+  retries: 10
+  delay: 2
+  when: not zk_tar.stat.exists
+
 - name: Unzip a bz2 (BZip) file
   win_unzip:
-    src: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
+    src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
     dest: '{{ zk_default_tarball_dir }}'
     recurse: true
+  when: not zk_tar.stat.exists
 
 - name: Find zookeeper_folder in temp
   win_find:
@@ -71,3 +69,4 @@
     src: '{{ zoo_temp_folder.files | map(attribute="path") | list | last }}\'
     dest: '{{ zk_dir }}'
     remote_src: true
+  when: not zk_folder.stat.exists

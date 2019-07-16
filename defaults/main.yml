@@ -29,3 +29,7 @@ zk_inventory_group: zookeeper
 zk_service_name: zookeeper
 zk_service_start: true
 zk_service_autostart: true
+chocolatey_installer: https://chocolatey.org/install.ps1
+chocolatey_path: c:/ProgramData/chocolatey
+chocolatey_version: latest
+chocolatey_windows_compression: "false"

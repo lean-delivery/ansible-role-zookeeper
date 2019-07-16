@@ -1,13 +1,4 @@
 ---
-- name: Check choco
-  win_chocolatey:
-    name: chocolatey
-    state: present
-
-- name: "Install nssm"
-  win_chocolatey:
-    name: nssm
-    state: present
 
 - name: Install zookeeper from chocolatey
   win_chocolatey:
