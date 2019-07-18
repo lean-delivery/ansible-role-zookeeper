@@ -51,7 +51,7 @@ AWS Windows zookeeper:
   tags:
     - aws
 
-AWS Windows zookeeper:
+AWS Windows zookeeper choco:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
