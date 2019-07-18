@@ -7,4 +7,3 @@
       transport: chocolatey
       java_major_version: 12
     - role: ansible-role-zookeeper
-      zk_tarball_installation: false
