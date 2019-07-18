@@ -51,6 +51,15 @@ AWS Windows zookeeper:
   tags:
     - aws
 
+AWS Windows zookeeper:
+  variables:
+    AWS_REGION: us-east-1
+  stage: deployment test
+  script:
+    - molecule test -s cloud-aws-windows-choco
+  tags:
+    - aws
+
 .EPC zookeeper:
   variables:
     EPC_REGION: EPAM-BY2
