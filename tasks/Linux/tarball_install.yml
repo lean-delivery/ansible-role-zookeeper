@@ -38,28 +38,28 @@
 
   - name: Creates directory
     file:
-      path: '{{ zk_dir }}'
+      path: '{{ zk_default_dir }}'
       state: directory
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
 
   - name: Creates directory symlink
     file:
-      src: '{{ zk_dir }}'
-      dest: '{{ zk_dir | replace("-" + zk_version, "") }}'
+      src: '{{ zk_default_dir }}'
+      dest: '{{ zk_default_dir | replace("-" + zk_version, "") }}'
       state: link
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
     when:
-      - zk_dir | replace("-" + zk_version, "") != zk_dir
+      - zk_default_dir | replace("-" + zk_version, "") != zk_default_dir
 
   - name: Unpack tarball
     unarchive:
       remote_src: true
       src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-      dest: '{{ zk_dir }}'
+      dest: '{{ zk_default_dir }}'
       extra_opts: '--strip-components=1'
-      creates: '{{ zk_dir }}/conf'
+      creates: '{{ zk_default_dir }}/conf'
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
 
@@ -70,15 +70,15 @@
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
     loop:
-      - '{{ zk_data_dir }}'
-      - '{{ zk_log_dir }}'
+      - '{{ zk_default_data_dir }}'
+      - '{{ zk_default_log_dir }}'
     loop_control:
       loop_var: zoo_dir
 
   - name: Write myid file
     template:
       src: myid.j2
-      dest: '{{ zk_data_dir }}/myid'
+      dest: '{{ zk_default_data_dir }}/myid'
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
       force: '{{ zk_force_myid }}'
@@ -88,7 +88,7 @@
   - name: Add zookeeper config files
     template:
       src: '{{ config }}.j2'
-      dest: '{{ zk_dir }}/conf/{{ config }}'
+      dest: '{{ zk_default_dir }}/conf/{{ config }}'
       owner: '{{ zk_user }}'
       group: '{{ zk_group }}'
       force: '{{ zk_force_config }}'

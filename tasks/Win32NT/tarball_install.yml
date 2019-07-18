@@ -12,7 +12,7 @@
 
 - name: Creates directory
   win_file:
-    path: '{{ zk_dir }}'
+    path: '{{ zk_default_dir }}'
     state: directory
 
 - name: Install PSCX
@@ -62,6 +62,6 @@
 - name: Copy from temporary directory
   win_copy:
     src: '{{ zoo_temp_folder.files | map(attribute="path") | list | last }}\'
-    dest: '{{ zk_dir }}'
+    dest: '{{ zk_default_dir }}'
     remote_src: true
   when: not zk_folder.stat.exists

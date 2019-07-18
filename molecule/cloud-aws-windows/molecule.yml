@@ -25,6 +25,7 @@ platforms:
     groups:
       - windows
       - zookeeper
+      - tarball
 
   - name: test-aws-Windows2019-zookeeper
     aws_image_id: ami-0477b9335a5a75438
@@ -40,6 +41,7 @@ platforms:
     groups:
       - windows
       - zookeeper
+      - chocolatey
 provisioner:
   name: ansible
   log: false
@@ -54,6 +56,11 @@ provisioner:
         ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', true) }}"
         ansible_winrm_transport: credssp
         ansible_winrm_server_cert_validation: ignore
+      chocolatey:
+        zk_tarball_installation:  false
+      tarball:
+        zk_tarball_installation:  true
+
   playbooks:
     create: ../resources/provisioning/WINRM/create.yml
     destroy: ../resources/provisioning/WINRM/destroy.yml

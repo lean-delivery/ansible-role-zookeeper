@@ -46,6 +46,7 @@
     src: 'zoo.cfg.j2'
     dest: '{{ zk_package_config_dir }}/zoo.cfg'
     loop: '{{ zk_config_file_list }}'
+    force: '{{ zk_force_config }}'
     loop_control:
     loop_var: config
 
@@ -57,7 +58,7 @@
 - name: Create a service via nssm
   win_nssm:
     name: '{{ zk_service_name }}'
-    application: '{{ zk_dir }}/bin/zkserver.cmd'
+    application: '{{ zk_default_dir }}/bin/zkserver.cmd'
     state: present
 
 - name: Start the service

@@ -7,7 +7,7 @@ Description=ZooKeeper
 Type=simple
 User={{ zk_user }}
 Group={{ zk_group }}
-ExecStart={{zk_dir}}/bin/zkServer.sh start-foreground
+ExecStart={{zk_default_dir}}/bin/zkServer.sh start-foreground
 
 TimeoutSec=300
 

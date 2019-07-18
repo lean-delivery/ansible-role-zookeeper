@@ -1,6 +1,6 @@
 tickTime={{ zk_tick_time }}
-dataDir={{ zk_data_dir }}
-dataLogDir={{ zk_log_dir }}
+dataDir={{ zk_default_data_dir }}
+dataLogDir={{ zk_default_log_dir }}
 initLimit={{ zk_init_limit }}
 syncLimit={{ zk_sync_limit }}
 {% if zk_autopurge_purgeInterval > 0 %}
@@ -9,7 +9,7 @@ autopurge.snapRetainCount={{ zk_autopurge_snapRetainCount }}
 {% endif %}
 {% if (zk_version is version_compare('3.5.0', '>=')) %}
 {% if zk_tarball_installation %}
-dynamicConfigFile={{ zk_dir }}/conf/zoo.cfg.dynamic
+dynamicConfigFile={{ zk_default_dir }}/conf/zoo.cfg.dynamic
 {% else %}
 dynamicConfigFile={{ zk_package_config_dir }}/zoo.cfg.dynamic
 {% endif %}
