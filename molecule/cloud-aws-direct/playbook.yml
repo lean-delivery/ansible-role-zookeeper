@@ -6,4 +6,3 @@
       transport: repositories
       java_major_version: 8
     - role: ansible-role-zookeeper
-
