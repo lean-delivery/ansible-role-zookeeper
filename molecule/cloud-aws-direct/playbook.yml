@@ -6,7 +6,4 @@
       transport: repositories
       java_major_version: 8
     - role: ansible-role-zookeeper
-      zk_force_myid: false
-      zk_force_config: false
-      zk_config:
-          maxClientCnxns: 60
+
