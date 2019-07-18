@@ -26,7 +26,7 @@ clientPort={{ zk_client_port }}
 {% if (zk_version is version_compare('3.5.0', '<')) %}
 {%- set ips = [] %}
 {%- for host in groups[zk_inventory_group] %}
-{{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_default_ipv4'].address)) }}
+{{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_fqdn'])) }}
 {%- endfor %}
 
 {% for server in ips %}

@@ -15,11 +15,6 @@
     path: '{{ zk_dir }}'
     state: directory
 
-- name: "Install nssm"
-  win_chocolatey:
-    name: nssm
-    state: present
-
 - name: Install PSCX
   win_psmodule:
     name: Pscx

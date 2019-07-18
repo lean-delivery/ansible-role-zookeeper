@@ -1,14 +1,10 @@
 ---
-- name: Debug
-  debug:
-    msg: 'Windows installation'
-
 - name: Check choco
   win_chocolatey:
     name: chocolatey
     state: present
 
-- name: "Install nssm"
+- name: Install nssm
   win_chocolatey:
     name: nssm
     state: present
@@ -34,23 +30,37 @@
       path: '{{ zk_default_log_dir }}'
       state: directory
 
+- name: Create data directory
+  win_file:
+      path: '{{ zk_default_data_dir }}'
+      state: directory
+
+- name: Write myid file
+  template:
+    src: myid.j2
+    dest: '{{ zk_package_myid_dir }}/myid'
+    force: '{{ zk_force_myid }}'
+
 - name: Configure zookeeper zoo.cfg config
   win_template:
-    src: 'Win32NT/zoo.cfg.j2'
+    src: 'zoo.cfg.j2'
     dest: '{{ zk_package_config_dir }}/zoo.cfg'
+    loop: '{{ zk_config_file_list }}'
+    loop_control:
+    loop_var: config
 
 - name: Configure zookeeper log4j.properties config
   win_template:
     src: 'log4j.properties.j2'
     dest: '{{ zk_package_config_dir }}/log4j.properties'
 
-- name: "Create a service via nssm"
+- name: Create a service via nssm
   win_nssm:
     name: '{{ zk_service_name }}'
     application: '{{ zk_dir }}/bin/zkserver.cmd'
     state: present
 
-- name: "Start the service"
+- name: Start the service
   win_service:
     name: '{{ zk_service_name }}'
     state: started

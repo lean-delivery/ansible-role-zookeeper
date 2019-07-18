@@ -25,6 +25,7 @@ platforms:
     groups:
       - windows
       - zookeeper
+      - choco
 
   - name: test-aws-Windows2019-zookeeper
     aws_image_id: ami-0477b9335a5a75438
@@ -40,6 +41,7 @@ platforms:
     groups:
       - windows
       - zookeeper
+      - choco
 provisioner:
   name: ansible
   log: false
@@ -60,7 +62,7 @@ provisioner:
   lint:
     name: ansible-lint
 scenario:
-  name: cloud-aws-windows
+  name: cloud-aws-windows-choco
 verifier:
   name: testinfra
   options:

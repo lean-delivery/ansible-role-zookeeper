@@ -19,8 +19,8 @@ zk_standalone_enabled: 'true'
 zk_data_dir: '{{ zk_default_data_dir }}'
 zk_log_dir: '{{ zk_default_log_dir }}'
 zk_dir: '{{ zk_default_dir }}'
-zk_force_myid: true
-zk_force_config: true
+zk_force_myid: false
+zk_force_config: false
 zk_tarball_dir: '{{ zk_default_tarball_dir }}'
 zk_rolling_log_file_max_size: 10MB
 zk_max_rolling_log_file_count: 10
@@ -29,7 +29,3 @@ zk_inventory_group: zookeeper
 zk_service_name: zookeeper
 zk_service_start: true
 zk_service_autostart: true
-chocolatey_installer: https://chocolatey.org/install.ps1
-chocolatey_path: c:/ProgramData/chocolatey
-chocolatey_version: latest
-chocolatey_windows_compression: "false"
