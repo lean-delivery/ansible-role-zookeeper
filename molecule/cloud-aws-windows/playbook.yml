@@ -3,7 +3,5 @@
   hosts: all
   roles:
     - role: lean_delivery.java
-      java_package: jdk
-      transport: chocolatey
       java_major_version: 8
     - role: ansible-role-zookeeper
