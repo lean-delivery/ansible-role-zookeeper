@@ -42,7 +42,7 @@ AWS zookeeper:
   tags:
     - aws
 
-.AWS Windows zookeeper:
+AWS Windows zookeeper:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test

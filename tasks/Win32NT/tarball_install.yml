@@ -1,18 +1,18 @@
 ---
 # install zookeeper from tarball
-- name: check if '{{ zk_default_dir }}' folder existrs
+- name: Check if '{{ zk_dir }}' folder existrs
   win_stat:
-    path: '{{ zk_default_dir }}'
+    path: '{{ zk_dir }}'
   register: zk_folder
 
 - name: Create log directory
   win_file:
-      path: '{{ zk_default_log_dir }}'
+      path: '{{ zk_log_dir }}'
       state: directory
 
 - name: Creates directory
   win_file:
-    path: '{{ zk_default_dir }}'
+    path: '{{ zk_dir }}'
     state: directory
 
 - name: Install PSCX
@@ -48,13 +48,13 @@
 - name: Unzip a bz2 (BZip) file
   win_unzip:
     src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-    dest: '{{ zk_default_tarball_dir }}'
+    dest: '{{ zk_tarball_dir }}'
     recurse: true
   when: not zk_tar.stat.exists
 
 - name: Find zookeeper_folder in temp
   win_find:
-    paths: '{{ zk_default_tarball_dir }}'
+    paths: '{{ zk_tarball_dir }}'
     recurse: false
     file_type: directory
   register: zoo_temp_folder
@@ -62,6 +62,6 @@
 - name: Copy from temporary directory
   win_copy:
     src: '{{ zoo_temp_folder.files | map(attribute="path") | list | last }}\'
-    dest: '{{ zk_default_dir }}'
+    dest: '{{ zk_dir }}'
     remote_src: true
   when: not zk_folder.stat.exists

@@ -42,6 +42,7 @@ platforms:
       - windows
       - zookeeper
       - chocolatey
+
 provisioner:
   name: ansible
   log: false
