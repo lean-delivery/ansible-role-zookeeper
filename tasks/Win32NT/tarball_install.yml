@@ -1,6 +1,6 @@
 ---
 # install zookeeper from tarball
-- name: Check if '{{ zk_dir }}' folder existrs
+- name: Check if '{{ zk_dir }}' folder exists
   win_stat:
     path: '{{ zk_dir }}'
   register: zk_folder

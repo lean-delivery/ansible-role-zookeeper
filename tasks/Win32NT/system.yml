@@ -43,7 +43,7 @@
 
 - name: Configure zookeeper zoo.cfg config
   win_template:
-    src: 'zoo.cfg.j2'
+    src: zoo.cfg.j2
     dest: '{{ zk_package_config_dir }}/zoo.cfg'
     loop: '{{ zk_config_file_list }}'
     force: '{{ zk_force_config }}'
@@ -52,7 +52,7 @@
 
 - name: Configure zookeeper log4j.properties config
   win_template:
-    src: 'log4j.properties.j2'
+    src: log4j.properties.j2
     dest: '{{ zk_package_config_dir }}/log4j.properties'
 
 - name: Create a service via nssm
