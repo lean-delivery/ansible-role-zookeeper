@@ -29,19 +29,21 @@
     path: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
   register: zk_tar
 
-- name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
-  set_fact:
-    sha_value: '{{ sha_url_item }}'
-  with_url: '{{ zk_url }}.{{ zk_checksum }}'
-  loop_control:
-    loop_var: sha_url_item
-  when: not zk_tar.stat.exists
+# - name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
+#   set_fact:
+#     sha_value: '{{ sha_url_item }}'
+#   with_url: '{{ zk_url }}.{{ zk_checksum }}'
+#   loop_control:
+#     loop_var: sha_url_item
+#   when: not zk_tar.stat.exists
 
 - name: 'Download zookeeper version {{ zk_version }}'
   win_get_url:
     url: '{{ zk_url }}'
     dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-    checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
+    #checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
+    checksum_algorithm: '{{ zk_checksum }}'
+    checksum_url: '{{ zk_url }}.{{ zk_checksum }}'
   register: result
   until: result is succeeded
   retries: 10
