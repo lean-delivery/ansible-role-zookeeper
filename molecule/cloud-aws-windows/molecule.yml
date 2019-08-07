@@ -70,7 +70,7 @@ provisioner:
     name: ansible-lint
 scenario:
   name: cloud-aws-windows
-# verifier:
+verifier:
 #   name: ansible
 #   lint:
 #     name: ansible-lint
