@@ -15,6 +15,14 @@
     path: '{{ zk_dir }}'
     state: directory
 
+- name: Debug zk_dir
+  debug:
+    var: zk_dir
+
+- name: Debug zk_folder
+  debug:
+    var: zk_folder
+
 - name: Ensure the required NuGet package provider version is installed
   win_shell: Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 
@@ -50,6 +58,10 @@
   delay: 2
   when: not zk_tar.stat.exists
 
+- name: Debug zk_tarball_dir
+  debug:
+    var: zk_tarball_dir
+
 - name: Unzip a tar.gz file
   win_unzip:
     src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
@@ -71,14 +83,6 @@
 - name: Debug zoo_temp_folder
   debug:
     var: zoo_temp_folder
-
-- name: Debug zk_dir
-  debug:
-    var: zk_dir
-
-- name: Debug zk_folder
-  debug:
-    var: zk_folder
 
 - name: Copy from temporary directory
   win_copy:

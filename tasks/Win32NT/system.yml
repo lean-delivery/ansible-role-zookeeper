@@ -25,6 +25,10 @@
     state: present
     level: machine
 
+- name: Debug zk_package_myid_dir
+  debug:
+    var: zk_package_myid_dir
+
 - name: Write myid file
   template:
     src: myid.j2
