@@ -23,9 +23,9 @@
   debug:
     var: zk_folder
 
-- name: Ensure the required NuGet package provider version is installed
-  win_shell: Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-  changed_when: false
+# - name: Ensure the required NuGet package provider version is installed
+#   win_shell: Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+#   changed_when: false
 
 - name: Install PSCX
   win_psmodule:
@@ -58,6 +58,10 @@
   retries: 10
   delay: 2
   when: not zk_tar.stat.exists
+
+- name: Debug result
+  debug:
+    var: result
 
 - name: Debug zk_tarball_dir
   debug:
