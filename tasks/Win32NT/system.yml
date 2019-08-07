@@ -35,14 +35,10 @@
     path: '{{ zk_data_dir }}'
     state: directory
 
-- name: Debug zk_package_myid_dir
-  debug:
-    var: zk_package_myid_dir
-
 - name: Write myid file
   template:
     src: myid.j2
-    dest: '{{ zk_package_myid_dir }}/myid'
+    dest: '{{ zk_default_data_dir }}/myid'
     force: '{{ zk_force_myid }}'
 
 - name: Configure zookeeper zoo.cfg config
