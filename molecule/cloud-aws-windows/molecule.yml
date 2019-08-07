@@ -70,7 +70,12 @@ provisioner:
     name: ansible-lint
 scenario:
   name: cloud-aws-windows
-verifier:
-  name: ansible
+# verifier:
+#   name: ansible
+#   lint:
+#     name: ansible-lint
+  name: testinfra
+  options:
+    verbose: true
   lint:
-    name: ansible-lint
+    name: flake8
