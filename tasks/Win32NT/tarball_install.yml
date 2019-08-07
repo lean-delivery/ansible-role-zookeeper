@@ -45,12 +45,16 @@
   delay: 2
   when: not zk_tar.stat.exists
 
-- name: Unzip a bz2 (BZip) file
+- name: Unzip a tar.gz file
   win_unzip:
     src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
     dest: '{{ zk_tarball_dir }}'
     recurse: true
   when: not zk_tar.stat.exists
+
+- name: Debug zk_tarball_dir
+  debug:
+    var: zk_tarball_dir
 
 - name: Find zookeeper_folder in temp
   win_find:
@@ -58,6 +62,18 @@
     recurse: false
     file_type: directory
   register: zoo_temp_folder
+
+- name: Debug zoo_temp_folder
+  debug:
+    var: zoo_temp_folder
+
+- name: Debug zk_dir
+  debug:
+    var: zk_dir
+
+- name: Debug zk_folder
+  debug:
+    var: zk_folder
 
 - name: Copy from temporary directory
   win_copy:

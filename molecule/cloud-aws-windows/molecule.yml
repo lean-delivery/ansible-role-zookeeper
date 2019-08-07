@@ -4,22 +4,22 @@ dependency:
   options:
     role-file: requirements.yml
 driver:
-  name: delegated
+  name: ec2
 lint:
   name: yamllint
   options:
     config-file: .yamllint
 platforms:
 
-  - name: test-aws-Windows2016-zookeeper
-    aws_image_id: ami-00a20f508263efd30
+  - name: test-aws-Windows2016-solr-standalone
+    image: ami-00a20f508263efd30
     platform: windows2016core
-    aws_region: us-east-1
+    region: us-east-1
     instance_type: m5.large
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
+    vpc_subnet_id: subnet-01be2149
+    assign_public_ip: true
     spot_price: 0.14
-    aws_sec_group:
+    security_group_name:
       - default
     wait_timeout: 1800
     groups:
@@ -27,15 +27,15 @@ platforms:
       - zookeeper
       - tarball
 
-  - name: test-aws-Windows2019-zookeeper
-    aws_image_id: ami-0477b9335a5a75438
+  - name: test-aws-Windows2019-solr-standalone
+    image: ami-0477b9335a5a75438
     platform: windows2019core
-    aws_region: us-east-1
+    region: us-east-1
     instance_type: m5.large
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
+    vpc_subnet_id: subnet-01be2149
+    assign_public_ip: true
     spot_price: 0.14
-    aws_sec_group:
+    security_group_name:
       - default
     wait_timeout: 1800
     groups:
@@ -45,15 +45,14 @@ platforms:
 
 provisioner:
   name: ansible
-  log: false
+  log: true
   config_options:
     defaults:
       callback_whitelist: profile_tasks,timer
-  connection_options:
-    ansible_connection: winrm
   inventory:
     group_vars:
       windows:
+        ansible_connection: winrm
         ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', true) }}"
         ansible_winrm_transport: credssp
         ansible_winrm_server_cert_validation: ignore
@@ -63,15 +62,15 @@ provisioner:
         zk_tarball_installation:  true
 
   playbooks:
-    create: ../resources/provisioning/WINRM/create.yml
-    destroy: ../resources/provisioning/WINRM/destroy.yml
+    create: ../resources/provisioning/AWS/create.yml
+    prepare: ../resources/provisioning/AWS/prepare.yml
+    destroy: ../resources/provisioning/AWS/destroy.yml
+    verify: ../resources/tests/verify.yml
   lint:
     name: ansible-lint
 scenario:
   name: cloud-aws-windows
 verifier:
-  name: testinfra
-  options:
-    verbose: true
+  name: ansible
   lint:
-    name: flake8
+    name: ansible-lint
