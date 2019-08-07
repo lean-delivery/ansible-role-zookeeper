@@ -15,6 +15,10 @@
     path: '{{ zk_dir }}'
     state: directory
 
+- name: Ensure the required NuGet package provider version is installed
+  win_shell:
+    free_form: Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+
 - name: Install PSCX
   win_psmodule:
     name: Pscx
