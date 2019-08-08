@@ -19,24 +19,16 @@
   debug:
     var: zk_dir
 
-- name: Debug zk_folder
-  debug:
-    var: zk_folder
-
-# - name: Ensure the required NuGet package provider version is installed
-#   win_shell: Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-#   changed_when: false
-
 - name: Install PSCX
   win_psmodule:
     name: Pscx
     state: present
     allow_clobber: true
 
-- name: check if '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz' exists
-  win_stat:
-    path: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-  register: zk_tar
+# - name: check if '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz' exists
+#   win_stat:
+#     path: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+#   register: zk_tar
 
 # - name: 'Get {{ zk_checksum }} for zookeeper {{ zk_version }}'
 #   set_fact:
@@ -46,22 +38,54 @@
 #     loop_var: sha_url_item
 #   when: not zk_tar.stat.exists
 
-- name: 'Download zookeeper version {{ zk_version }}'
-  win_get_url:
-    url: '{{ zk_url }}'
-    dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-    #checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
-    checksum_algorithm: '{{ zk_checksum }}'
-    checksum_url: '{{ zk_url }}.{{ zk_checksum }}'
-  register: result
-  until: result is succeeded
-  retries: 10
-  delay: 2
-  when: not zk_tar.stat.exists
+# - name: 'Download zookeeper version {{ zk_version }}'
+#   win_get_url:
+#     url: '{{ zk_url }}'
+#     dest: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+#     ##checksum: '{{ zk_checksum }}:{{ sha_value.split(" ")[0] }}'
+#     checksum_algorithm: '{{ zk_checksum }}'
+#     checksum_url: '{{ zk_url }}.{{ zk_checksum }}'
+#   register: result
+#   until: result is succeeded
+#   retries: 10
+#   delay: 2
+#   when: not zk_tar.stat.exists
 
-- name: Debug result
+####################################################################################
+- name: 'Get artifact checksum file'
+  win_uri:
+    url: '{{ zk_url }}.{{ zk_checksum }}'
+    return_content: true
+  register: artifact_checksum_file
+
+- name: Debug artifact_checksum_file
   debug:
-    var: result
+    var: artifact_checksum_file
+
+- name: Get artifact checksum
+  set_fact:
+    artifact_checksum: '{{ artifact_checksum_file.split(" ")[0] }}'
+
+- name: Debug artifact_checksum
+  debug:
+    var: artifact_checksum
+
+- name: 'Get sha512 checksum of file'
+  win_stat:
+    path: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
+    get_checksum: true
+    checksum_algorithm: 'sha512'
+  register: artifact
+
+- name: Download with checksum validation
+  include_tasks: fetch_checksum.yml
+  when: |
+    not artifact.stat.exists
+    or artifact.stat.checksum != artifact_checksum
+  retries: 15
+  delay: 2
+  until: artifact.stat.checksum == artifact_checksum
+####################################################################################
 
 - name: Debug zk_tarball_dir
   debug:
@@ -72,7 +96,7 @@
     src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
     dest: '{{ zk_tarball_dir }}'
     recurse: true
-  when: not zk_tar.stat.exists
+  #when: not zk_tar.stat.exists
 
 - name: Debug zk_tarball_dir
   debug:
