@@ -1,8 +1,8 @@
 ---
-- name: Check choco
-  win_chocolatey:
-    name: chocolatey
-    state: present
+# - name: Check choco
+#   win_chocolatey:
+#     name: chocolatey
+#     state: present
 
 - name: Install nssm
   win_chocolatey:

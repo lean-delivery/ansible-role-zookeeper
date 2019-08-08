@@ -64,7 +64,7 @@
 
 - name: Get artifact checksum
   set_fact:
-    artifact_checksum: '{{ artifact_checksum_file.split(" ")[0] }}'
+    artifact_checksum: '{{ artifact_checksum_file.content.split(" ")[0] }}'
 
 - name: Debug artifact_checksum
   debug:
