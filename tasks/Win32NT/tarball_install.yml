@@ -91,20 +91,24 @@
   debug:
     var: zk_tarball_dir
 
-- name: Unzip a tar.gz file
+- name: Create temporary directory
+  win_tempfile:
+    state: directory
+  register: temp_dir_path
+
+- name: Unarchive to temporary directory
   win_unzip:
     src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-    dest: '{{ zk_tarball_dir }}'
+    dest: '{{ temp_dir_path }}'
     recurse: true
-  #when: not zk_tar.stat.exists
 
-- name: Debug zk_tarball_dir
+- name: Debug temp_dir_path
   debug:
-    var: zk_tarball_dir
+    var: temp_dir_path
 
 - name: Find zookeeper_folder in temp
   win_find:
-    paths: '{{ zk_tarball_dir }}'
+    paths: '{{ temp_dir_path }}'
     recurse: false
     file_type: directory
   register: zoo_temp_folder
