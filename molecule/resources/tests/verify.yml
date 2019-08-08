@@ -31,8 +31,8 @@
     assert:
       that: "'running' == zookeeper_status.state"
 
-  # - name: Check Solr port status
-  #   win_wait_for:
-  #     port: '8983'
-  #     state: started
-  #     timeout: 3
+  - name: Check Zookeeper client port status
+    win_wait_for:
+      port: '2181'
+      state: started
+      timeout: 3
