@@ -59,7 +59,7 @@
   - name: Unarchive to temporary directory
     win_unzip:
       src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
-      dest: '{{ zk_tarball_dir }}'
+      dest: '{{ temp_dir_path }}'
       recurse: true
 
   - name: Debug temp_dir_path
