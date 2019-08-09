@@ -43,22 +43,22 @@ platforms:
       - zookeeper
       - tarball
 
-  - name: test-aws-Windows2019-zookeeper-3-5-tgz
-    image: ami-0477b9335a5a75438
-    platform: windows2019core
-    region: us-east-1
-    instance_type: m5.large
-    vpc_subnet_id: subnet-01be2149
-    assign_public_ip: true
-    spot_price: 0.14
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    groups:
-      - windows
-      - zookeeper
-      - tarball
-      - zookeeper_3_5
+  # - name: test-aws-Windows2019-zookeeper-3-5-tgz
+  #   image: ami-0477b9335a5a75438
+  #   platform: windows2019core
+  #   region: us-east-1
+  #   instance_type: m5.large
+  #   vpc_subnet_id: subnet-01be2149
+  #   assign_public_ip: true
+  #   spot_price: 0.14
+  #   security_group_name:
+  #     - default
+  #   wait_timeout: 1800
+  #   groups:
+  #     - windows
+  #     - zookeeper
+  #     - tarball
+  #     - zookeeper_3_5
 
   # - name: test-aws-Windows2019-zookeeper-choko
   #   image: ami-0477b9335a5a75438
