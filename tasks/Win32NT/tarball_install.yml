@@ -59,8 +59,24 @@
   - name: Unarchive to temporary directory
     win_unzip:
       src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar.gz'
+      dest: '{{ zk_tarball_dir }}'
+      # recurse: true
+################################################
+  - name: 'List files in {{ zk_tarball_dir }}'
+    win_find:
+      paths: '{{ zk_tarball_dir }}'
+      recurse: false
+      file_type: file
+    register: files_list
+
+  - name: Debug files_list
+    debug:
+      var: files_list
+################################################
+  - name: Unarchive to temporary directory
+    win_unzip:
+      src: '{{ zk_tarball_dir }}/zookeeper-{{ zk_version }}.tar'
       dest: '{{ temp_dir_path }}'
-      recurse: true
 
   - name: Debug temp_dir_path
     debug:
