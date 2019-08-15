@@ -1,22 +1,22 @@
 ---
-# - name: Verify Linux
-#   hosts: rhel_family:debian_family
-#   tasks:
-#   - name: Check Solr service status
-#     service:
-#       name: 'solr'
-#     check_mode: true
-#     register: sorl_status
+- name: Verify Linux
+  hosts: rhel_family:debian_family
+  tasks:
+  - name: Check Zookeeper service status
+    service:
+      name: 'zookeeper'
+    check_mode: true
+    register: zookeeper_status
 
-#   - name: Assest Solr service status
-#     assert:
-#       that: "'running' == sorl_status.status.SubState"
+  - name: Assest Zookeeper service status
+    assert:
+      that: "'running' == zookeeper_status.status.SubState"
 
-#   - name: Check Solr port status
-#     wait_for:
-#       port: '8983'
-#       state: started
-#       timeout: 3
+  - name: Check Zookeeper port status
+    wait_for:
+      port: '2181'
+      state: started
+      timeout: 3
 
 - name: Verify Windows
   hosts: windows
