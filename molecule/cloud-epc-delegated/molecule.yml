@@ -17,8 +17,8 @@ platforms:
     wait_timeout: 3600
     groups:
       - zookeeper
-      - zookeeper_centos
       - rhel_family
+
   - name: test-epc-ubuntu1804-zookeeper
     image: Ubuntu18.04_64-bit
     shape: small
@@ -26,7 +26,6 @@ platforms:
     wait_timeout: 3600
     groups:
       - zookeeper
-      - zookeeper_ubuntu
       - debian_family
 provisioner:
   name: ansible

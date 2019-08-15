@@ -1,4 +1,10 @@
 ---
+
+- name: Check zookeeper version
+  fail:
+    msg: "Unsupported version for this platform!"
+  when: zk_version is version_compare('3.5.5', '==')
+
 - name: Check if '{{ zk_dir }}' folder exists
   win_stat:
     path: '{{ zk_dir }}'

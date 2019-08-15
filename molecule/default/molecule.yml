@@ -15,8 +15,8 @@ platforms:
     privileged: true
     groups:
       - zookeeper
-      - zookeeper_centos
       - rhel_family
+
   - name: test-docker-ubuntu1804-zookeeper
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: true
@@ -31,7 +31,6 @@ platforms:
       - SYS_ADMIN
     groups:
       - zookeeper
-      - zookeeper_ubuntu
       - debian_family
 provisioner:
   name: ansible

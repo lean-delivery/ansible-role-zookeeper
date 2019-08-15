@@ -1,13 +1,8 @@
 ---
-# - name: Check choco
-#   win_chocolatey:
-#     name: chocolatey
-#     state: present
-
-# - name: Install nssm
-#   win_chocolatey:
-#     name: nssm
-#     state: present
+- name: Install nssm
+  win_chocolatey:
+    name: nssm
+    state: present
 
 - name: Zookeeper Installation
   include_tasks: '{{ zk_install_type }}.yml'
@@ -55,16 +50,11 @@
     src: log4j.properties.j2
     dest: '{{ zk_package_config_dir }}/log4j.properties'
 
-# - name: Create a service via nssm
-#   win_nssm:
-#     name: '{{ zk_service_name }}'
-#     application: '{{ zk_dir }}/bin/zkServer.cmd'
-#     state: present
-
-- name: Start the service
-  win_service:
+- name: Create a service via nssm
+  win_nssm:
     name: '{{ zk_service_name }}'
-    path: '{{ zk_dir }}/bin/zkServer.cmd'
+    application: '{{ zk_dir }}/bin/zkServer.cmd'
+    state: present
 
 - name: Start the service
   win_service:

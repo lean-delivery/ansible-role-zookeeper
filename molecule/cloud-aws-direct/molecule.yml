@@ -25,7 +25,6 @@ platforms:
     groups:
       - rhel_family
       - zookeeper
-      - zookeeper_centos
       - package_install
 
   - name: test-aws-ubuntu16-zookeeper
@@ -43,7 +42,6 @@ platforms:
     groups:
       - debian_family
       - zookeeper
-      - zookeeper_ubuntu
 
   - name: test-aws-ubuntu18-zookeeper
     image: ami-012fd5eb46f56731f
@@ -60,7 +58,6 @@ platforms:
     groups:
       - debian_family
       - zookeeper
-      - zookeeper_ubuntu
       - package_install
 
   - name: test-aws-Debian9-zookeeper
@@ -78,7 +75,7 @@ platforms:
     groups:
       - debian_family
       - zookeeper
-      - zookeeper_ubuntu
+      - zookeeper_3_5
 
 provisioner:
   name: ansible
@@ -87,6 +84,8 @@ provisioner:
     group_vars:
       package_install:
         zk_tarball_installation: false
+      zookeeper_3_5:
+        zk_version: 3.5.5
   config_options:
     defaults:
       callback_whitelist: profile_tasks,timer
