@@ -10,12 +10,12 @@ lint:
   options:
     config-file: .yamllint
 platforms:
-  - name: test-docker-centos7-zookeeper
-    image: leandelivery/docker-systemd:centos7
-    privileged: true
-    groups:
-      - zookeeper
-      - rhel_family
+  # - name: test-docker-centos7-zookeeper
+  #   image: leandelivery/docker-systemd:centos7
+  #   privileged: true
+  #   groups:
+  #     - zookeeper
+  #     - rhel_family
 
   - name: test-docker-ubuntu1804-zookeeper
     image: leandelivery/docker-systemd:ubuntu-18.04
@@ -32,9 +32,14 @@ platforms:
     groups:
       - zookeeper
       - debian_family
+      - package_install
 provisioner:
   name: ansible
   # log: true
+  inventory:
+    group_vars:
+      package_install:
+        zk_tarball_installation: false
   lint:
     name: ansible-lint
 scenario:
