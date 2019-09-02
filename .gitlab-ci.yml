@@ -36,7 +36,7 @@ Lint:
   tags:
     - aws
 
-.AWS zookeeper:
+AWS zookeeper:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
