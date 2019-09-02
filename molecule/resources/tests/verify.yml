@@ -2,19 +2,29 @@
 - name: Verify Linux
   hosts: rhel_family:debian_family
   tasks:
-  - name: Check Zookeeper service status
-    service:
-      name: 'zookeeper'
-    check_mode: true
-    register: zookeeper_status
+  # - name: Check Zookeeper service status
+  #   service:
+  #     name: 'zookeeper'
+  #   check_mode: true
+  #   register: zookeeper_status
 
-  - name: Debug zookeeper_status
-    debug:
-      var: zookeeper_status
+  # - name: Debug zookeeper_status
+  #   debug:
+  #     var: zookeeper_status
 
-  - name: Assest Zookeeper service status
+  # - name: Assest Zookeeper service status
+  #   assert:
+  #     that: "'running' == zookeeper_status.status.SubState"
+
+  - name: Populate service facts
+    service_facts:
+
+  - name: Assert that zookeeper service is running
     assert:
-      that: "'running' == zookeeper_status.status.SubState"
+      that: |
+              "'running' in ansible_facts.services['zookeeper.service'].state"
+              or
+              "'running' in ansible_facts.services['zookeeper'].state"
 
   - name: Check Zookeeper port status
     wait_for:
