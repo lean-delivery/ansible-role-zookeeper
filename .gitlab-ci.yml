@@ -1,8 +1,4 @@
 ---
-default:
-  image:
-    name: leandelivery/docker-ansible-ci:ansible-2.7
-
 stages:
   - lint
   - deployment test
@@ -29,7 +25,7 @@ Lint:
   tags:
     - aws
 
-.Docker zookeeper:
+Docker zookeeper:
   stage: deployment test
   script:
     - molecule test -s default
@@ -45,7 +41,9 @@ AWS zookeeper:
   tags:
     - aws
 
-.AWS Windows zookeeper:
+AWS Windows zookeeper:
+  image:
+    name: leandelivery/docker-ansible-ci:ansible-2.7
   variables:
     AWS_REGION: us-east-1
   stage: deployment test

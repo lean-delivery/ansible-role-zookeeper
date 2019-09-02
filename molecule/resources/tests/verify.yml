@@ -8,10 +8,6 @@
     check_mode: true
     register: zookeeper_status
 
-  - name: Debug status
-    debug:
-      var: zookeeper_status
-
   - name: Assest Zookeeper service status
     assert:
       that: "'running' == zookeeper_status.status.SubState"
