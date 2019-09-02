@@ -37,6 +37,8 @@ platforms:
 provisioner:
   name: ansible
   log: false
+  playbooks:
+    verify: ../resources/tests/verify.yml
   lint:
     name: ansible-lint
 scenario:
