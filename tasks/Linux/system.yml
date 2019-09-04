@@ -17,10 +17,6 @@
   check_mode: true
   register: zookeeper_status
 
-- name: Debug zookeeper_status
-  debug:
-    var: zookeeper_status
-
 - name: Start service
   service:
     name: '{{ zk_service_name }}'
