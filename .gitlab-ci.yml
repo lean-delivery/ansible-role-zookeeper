@@ -25,14 +25,14 @@ Lint:
   tags:
     - aws
 
-.Docker zookeeper:
+Docker zookeeper:
   stage: deployment test
   script:
     - molecule test -s default
   tags:
     - aws
 
-.AWS zookeeper:
+AWS zookeeper:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
@@ -52,7 +52,7 @@ AWS Windows zookeeper:
   tags:
     - aws
 
-.EPC zookeeper:
+EPC zookeeper:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test

@@ -35,6 +35,8 @@
     src: myid.j2
     dest: '{{ zk_default_data_dir }}\myid'
     force: '{{ zk_force_myid }}'
+  notify:
+    - restart Zookeeper for Windows
 
 - name: Configure zookeeper zoo.cfg config
   win_template:
@@ -44,15 +46,15 @@
     force: '{{ zk_force_config }}'
     loop_control:
     loop_var: config
+  notify:
+    - restart Zookeeper for Windows
 
 - name: Configure zookeeper log4j.properties config
   win_template:
     src: log4j.properties.j2
     dest: '{{ zk_package_config_dir }}\log4j.properties'
-
-- name: Debug choko zk_dir
-  debug:
-    var: zk_dir
+  notify:
+    - restart Zookeeper for Windows
 
 - name: Create a service via nssm
   win_nssm:

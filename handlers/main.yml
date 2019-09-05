@@ -3,4 +3,13 @@
   systemd:
     name: '{{ zk_service_name }}'
     state: restarted
+  when:
+    - zk_service_start | bool
   become: true
+
+- name: restart Zookeeper for Windows
+  win_service:
+    name: '{{ zk_service_name }}'
+    state: restarted
+  when:
+    - zk_service_start | bool
