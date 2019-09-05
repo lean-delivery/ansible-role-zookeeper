@@ -1,9 +1,8 @@
 ---
-
 - name: Install zookeeper from chocolatey
   win_chocolatey:
     name: apache-zookeeper
-    package_params: "unzipLocation={{ zk_choko_basedir }}\"
+    package_params: "unzipLocation={{ zk_choko_basedir }}\\"
   register: choco_install
   retries: 15
   delay: 5
