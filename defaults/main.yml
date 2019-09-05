@@ -19,7 +19,7 @@ zk_standalone_enabled: 'true'
 zk_data_dir: '{{ zk_default_data_dir }}'
 zk_log_dir: '{{ zk_default_log_dir }}'
 zk_dir: '{{ zk_default_dir }}'
-zk_choko_basedir: C:/zookeeper
+zk_choko_basedir: C:\zookeeper
 zk_force_myid: true
 zk_force_config: true
 zk_tarball_dir: '{{ zk_default_tarball_dir }}'

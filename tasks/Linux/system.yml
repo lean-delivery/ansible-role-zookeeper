@@ -16,4 +16,4 @@
     state: started
   become: true
   when:
-    - zk_service_start
+    - zk_service_start | bool

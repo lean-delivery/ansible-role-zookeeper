@@ -60,3 +60,5 @@
   win_service:
     name: '{{ zk_service_name }}'
     state: started
+  when:
+    - zk_service_start | bool
