@@ -84,8 +84,11 @@ Role Variables
  - `zk_log_dir` - logs directory
     default: `{{ zk_default_log_dir }}`
 
- - `zk_dir` - zookeeper direcotry
+ - `zk_dir` - zookeeper directory
     default: `{{ zk_default_dir }}`
+
+ - `zk_choko_basedir` - zookeeper base directory when installing from chocolatey
+    default: `C:\zookeeper`
 
  - `zk_force_myid` - to reset id
     default: `true`

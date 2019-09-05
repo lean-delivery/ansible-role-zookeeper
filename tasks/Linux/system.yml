@@ -6,16 +6,9 @@
   service:
     name: '{{ zk_service_name }}'
     enabled: true
-  register: dbg
   become: true
   when:
-    - zk_service_autostart
-
-- name: Check Zookeeper service status
-  service:
-    name: 'zookeeper'
-  check_mode: true
-  register: zookeeper_status
+    - zk_service_autostart | bool
 
 - name: Start service
   service:
