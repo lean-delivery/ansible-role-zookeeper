@@ -33,13 +33,13 @@
 - name: Write myid file
   template:
     src: myid.j2
-    dest: '{{ zk_default_data_dir }}/myid'
+    dest: '{{ zk_default_data_dir }}\myid'
     force: '{{ zk_force_myid }}'
 
 - name: Configure zookeeper zoo.cfg config
   win_template:
     src: zoo.cfg.j2
-    dest: '{{ zk_package_config_dir }}/zoo.cfg'
+    dest: '{{ zk_package_config_dir }}\zoo.cfg'
     loop: '{{ zk_config_file_list }}'
     force: '{{ zk_force_config }}'
     loop_control:
@@ -48,12 +48,16 @@
 - name: Configure zookeeper log4j.properties config
   win_template:
     src: log4j.properties.j2
-    dest: '{{ zk_package_config_dir }}/log4j.properties'
+    dest: '{{ zk_package_config_dir }}\log4j.properties'
+
+- name: Debug choko zk_dir
+  debug:
+    var: zk_dir
 
 - name: Create a service via nssm
   win_nssm:
     name: '{{ zk_service_name }}'
-    application: '{{ zk_dir }}/bin/zkServer.cmd'
+    application: '{{ zk_dir }}\bin\zkServer.cmd'
     state: present
 
 - name: Start the service
