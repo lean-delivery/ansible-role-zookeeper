@@ -5,7 +5,7 @@
     dest: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
     force: true
 
-- name: 'Get sha512 checksum of file'
+- name: Get sha512 checksum of file
   win_stat:
     path: '{{ zk_tarball_dir }}\zookeeper-{{ zk_version }}.tar.gz'
     get_checksum: true
