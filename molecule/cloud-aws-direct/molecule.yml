@@ -154,6 +154,15 @@ provisioner:
         zk_tarball_installation: false
       zookeeper_3_5:
         zk_version: 3.5.5
+      windows:
+        ansible_connection: winrm
+        ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', true) }}"
+        ansible_winrm_transport: credssp
+        ansible_winrm_server_cert_validation: ignore
+      chocolatey:
+        zk_tarball_installation:  false
+      tarball:
+        zk_tarball_installation:  true
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/prepare.yml
