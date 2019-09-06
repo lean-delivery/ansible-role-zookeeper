@@ -59,6 +59,9 @@
   win_service:
     name: '{{ zk_service_name }}'
     state: started
+  register: zookeeper_service
+  until: "zookeeper_service.state == 'running'"
+  retries: 50
   when:
     - zk_service_start | bool
 
