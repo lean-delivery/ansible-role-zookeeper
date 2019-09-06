@@ -31,7 +31,7 @@
     state: directory
 
 - name: Write myid file
-  template:
+  win_template:
     src: myid.j2
     dest: '{{ zk_default_data_dir }}\myid'
     force: '{{ zk_force_myid }}'
