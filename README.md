@@ -29,7 +29,7 @@ Requirements
     - 18.04
   - Debian
     - 9
-  - Windows
+  - Windows (Ansible 2.7.* only)
     - all
 
 Role Variables
@@ -88,7 +88,7 @@ Role Variables
     default: `{{ zk_default_dir }}`
 
  - `zk_choko_basedir` - zookeeper base directory when installing from chocolatey
-    default: `C:/zookeeper`
+    default: `C:\zookeeper`
 
  - `zk_force_myid` - to reset id
     default: `true`
