@@ -64,10 +64,10 @@
 
 - name: Check Zookeeper client port status
   win_wait_for:
-    port: '2181'
+    port: '{{ zk_client_port }}'
     state: started
-    timeout: 120
+    timeout: 320
     delay: 2
-    connect_timeout: 2
+    connect_timeout: 10
   when:
     - zk_service_start | bool

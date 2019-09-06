@@ -5,9 +5,3 @@
     - role: ansible-role-zookeeper
       zk_force_myid: false
       # zk_force_config: false
-
-- name: Converge2
-  hosts: all
-  roles:
-    - role: ansible-role-zookeeper
-      zk_force_myid: false
