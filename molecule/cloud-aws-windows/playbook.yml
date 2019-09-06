@@ -4,5 +4,4 @@
   roles:
     - role: ansible-role-zookeeper
       zk_force_myid: false
-      zk_config:
-        maxClientCnxns: 60
+      # zk_force_config: false
