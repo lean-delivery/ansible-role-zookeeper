@@ -38,23 +38,23 @@
   notify:
     - restart Zookeeper for Windows
 
-- name: Configure zookeeper zoo.cfg config
+- name: Configure zookeeper configs
   win_template:
-    src: zoo.cfg.j2
-    dest: '{{ zk_package_config_dir }}\zoo.cfg'
-    loop: '{{ zk_config_file_list }}'
+    src: '{{ config_item }}.j2'
+    dest: '{{ zk_package_config_dir }}\{{ config_item }}'
     force: '{{ zk_force_config }}'
-    loop_control:
-    loop_var: config
+  loop: '{{ zk_config_file_list }}'
+  loop_control:
+    loop_var: config_item
   notify:
     - restart Zookeeper for Windows
 
-- name: Configure zookeeper log4j.properties config
-  win_template:
-    src: log4j.properties.j2
-    dest: '{{ zk_package_config_dir }}\log4j.properties'
-  notify:
-    - restart Zookeeper for Windows
+# - name: Configure zookeeper log4j.properties config
+#   win_template:
+#     src: log4j.properties.j2
+#     dest: '{{ zk_package_config_dir }}\log4j.properties'
+#   notify:
+#     - restart Zookeeper for Windows
 
 - name: Create a service via nssm
   win_nssm:
