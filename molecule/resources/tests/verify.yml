@@ -31,8 +31,12 @@
     assert:
       that: "'running' == zookeeper_status.state"
 
+  - name: Debug zookeeper service
+    debug:
+      var: zookeeper_status
+
   - name: Check Zookeeper client port status
     win_wait_for:
       port: '2181'
       state: started
-      timeout: 3
+      timeout: 10
