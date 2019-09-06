@@ -33,6 +33,8 @@ Lint:
     - aws
 
 AWS zookeeper:
+  image:
+    name: leandelivery/docker-ansible-ci:ansible-2.7
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
