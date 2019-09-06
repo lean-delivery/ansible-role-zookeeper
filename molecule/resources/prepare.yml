@@ -1,0 +1,8 @@
+---
+- name: Include common prepare
+  import_playbook: provisioning/AWS/prepare.yml
+
+- name: Install java
+  hosts: all
+  roles:
+    - role: lean_delivery.java

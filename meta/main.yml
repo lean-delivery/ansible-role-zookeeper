@@ -15,6 +15,10 @@ galaxy_info:
     - name: "EL"
       versions:
         - "7"
+    - name: "Amazon"
+      versions:
+        - "2017.12"
+        - "Candidate"
     - name: "Debian"
       versions:
         - "stretch"

@@ -22,11 +22,12 @@ Requirements
 
  - Minimal Version of the ansible for installation: 2.7
  Supported OS:
-   - CentOS
+  - CentOS
        7
-   - Ubuntu
+  - Ubuntu
     - 16.04
     - 18.04
+  - Amazon Linux 2
   - Debian
     - 9
   - Windows (Ansible 2.7.* only)
