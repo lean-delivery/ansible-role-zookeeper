@@ -22,8 +22,7 @@
 
 - name: Create log directory
   win_file:
-    path: >-
-      {{ zk_log_dir | regex_replace('\\', '\\\\') }}
+    path: '{{ zk_log_dir }}'
     state: directory
 
 - name: Create data directory
