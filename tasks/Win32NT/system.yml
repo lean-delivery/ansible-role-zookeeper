@@ -49,13 +49,6 @@
   notify:
     - restart Zookeeper for Windows
 
-# - name: Configure zookeeper log4j.properties config
-#   win_template:
-#     src: log4j.properties.j2
-#     dest: '{{ zk_package_config_dir }}\log4j.properties'
-#   notify:
-#     - restart Zookeeper for Windows
-
 - name: Create a service via nssm
   win_nssm:
     name: '{{ zk_service_name }}'
