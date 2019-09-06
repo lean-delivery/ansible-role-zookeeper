@@ -64,7 +64,7 @@ platforms:
     platform: windows2019core
     region: us-east-1
     instance_type: m5.large
-    vpc_subnet_id: subnet-01be2149
+    vpc_subnet_id: subnet-314c223d
     assign_public_ip: true
     spot_price: 0.14
     security_group_name:
