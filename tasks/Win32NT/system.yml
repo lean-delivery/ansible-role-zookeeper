@@ -61,3 +61,20 @@
     state: started
   when:
     - zk_service_start | bool
+
+- name: Check Zookeeper service status
+  win_service:
+    name: '{{ zk_service_name }}'
+  check_mode: true
+  register: zookeeper_status
+
+- name: Debug zookeeper service
+  debug:
+    var: zookeeper_status
+
+- name: Start the service again
+  win_service:
+    name: '{{ zk_service_name }}'
+    state: started
+  when:
+    - zk_service_start | bool
