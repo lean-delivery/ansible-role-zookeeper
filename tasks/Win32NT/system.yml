@@ -64,7 +64,6 @@
 
 - name: Check Zookeeper client port status
   win_wait_for:
-    host: 0.0.0.0
     port: '{{ zk_client_port }}'
     state: started
     timeout: 600
