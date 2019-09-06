@@ -50,7 +50,7 @@ AWS Windows zookeeper:
     AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule --debug test -s cloud-aws-windows
+    - molecule test -s cloud-aws-windows
   tags:
     - aws
 
