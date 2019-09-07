@@ -27,21 +27,21 @@ platforms:
       - zookeeper
       - chocolatey
 
-  - name: test-aws-Windows2016-zookeeper-tgz
-    image: ami-00a20f508263efd30
-    platform: windows2016core
-    region: us-east-1
-    instance_type: m5.large
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
-    spot_price: 0.14
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    groups:
-      - windows
-      - zookeeper
-      - tarball
+  # - name: test-aws-Windows2016-zookeeper-tgz
+  #   image: ami-00a20f508263efd30
+  #   platform: windows2016core
+  #   region: us-east-1
+  #   instance_type: m5.large
+  #   vpc_subnet_id: subnet-0f2b9cd66faea38af
+  #   assign_public_ip: false
+  #   spot_price: 0.14
+  #   security_group_name:
+  #     - default
+  #   wait_timeout: 1800
+  #   groups:
+  #     - windows
+  #     - zookeeper
+  #     - tarball
 
   # - name: test-aws-Windows2019-zookeeper-tgz1
   #   image: ami-0477b9335a5a75438
