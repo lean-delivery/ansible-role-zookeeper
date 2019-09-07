@@ -62,6 +62,7 @@
   register: zookeeper_service
   # until: "zookeeper_service.state == 'running'"
   # retries: 50
+  ignore_errors: true
   when:
     - zk_service_start | bool
 
