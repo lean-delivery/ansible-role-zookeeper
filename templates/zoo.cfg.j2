@@ -26,26 +26,25 @@ clientPort={{ zk_client_port }}
 {% if (zk_version is version('3.5.0', '<')) %}
 {%- set ips = [] %}
 {%- for host in groups[zk_inventory_group] %}
-{{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_host'])) }}
+{% if host == inventory_hostname %}
+{%- set zk_address_local = '0.0.0.0' %}
+{% else %}
+{%- set zk_address_local = hostvars[host]['zk_address'] %}
+{% endif %}
+{{- ips.append(dict(id=loop.index, host=host, ip=zk_address_local)) }}
 {%- endfor %}
 
 {% for server in ips %}
 {% if server.host is defined %}
 {% if server.ip is defined %}
-{% if ansible_host == server.ip %}
-server.{{server.id}}=0.0.0.0:2888:3888
-{% else %}
 server.{{server.id}}={{server.ip}}:2888:3888
-{% endif %}
-{% else %}
-{% if inventory_hostname == server.host %}
-server.{{server.id}}=0.0.0.0:2888:3888
 {% else %}
 server.{{server.id}}={{server.host}}:2888:3888
 {% endif %}
-{% endif %}
 {% else %}
+{% if server == inventory_hostname %}
 server.{{loop.index}}={{server}}:2888:3888
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}

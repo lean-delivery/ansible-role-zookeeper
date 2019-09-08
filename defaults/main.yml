@@ -26,6 +26,7 @@ zk_tarball_dir: '{{ zk_default_tarball_dir }}'
 zk_rolling_log_file_max_size: 10MB
 zk_max_rolling_log_file_count: 10
 zk_inventory_group: zookeeper
+zk_address: '{{ ansible_host }}'
 
 zk_service_name: zookeeper
 zk_service_start: true
