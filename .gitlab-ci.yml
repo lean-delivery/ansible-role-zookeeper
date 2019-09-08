@@ -32,7 +32,7 @@ Lint:
   tags:
     - aws
 
-.AWS zookeeper:
+AWS zookeeper:
   image:
     name: leandelivery/docker-ansible-ci:ansible-2.7
   variables:

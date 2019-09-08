@@ -55,11 +55,9 @@ platforms:
       - default
     wait_timeout: 1800
     groups:
-      - zookeeper_3_5
       - windows
       - zookeeper
       - tarball
-
 
 provisioner:
   name: ansible
@@ -78,8 +76,6 @@ provisioner:
         zk_tarball_installation:  false
       tarball:
         zk_tarball_installation:  true
-      zookeeper_3_5:
-        zk_version: 3.5.5
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/prepare.yml
