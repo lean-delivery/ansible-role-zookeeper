@@ -1,15 +1,5 @@
 ---
 - name: Converge
   hosts: all
-  # pre_tasks:
-  #   - name: debug ansible_fqdn
-  #     debug:
-  #       var: ansible_facts
-
-  #   - name: debug ansible_hostname
-  #     debug:
-  #       var: ansible_host
   roles:
     - role: ansible-role-zookeeper
-      zk_force_myid: false
-      # zk_force_config: false

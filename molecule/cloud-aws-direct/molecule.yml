@@ -77,21 +77,21 @@ platforms:
       - debian_family
       - zookeeper
 
-  - name: test-aws-ubuntu18-zookeeper
-    image: ami-012fd5eb46f56731f
-    platform: ubuntu18
-    instance_type: m5.large
-    region: us-east-1
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
-    security_group_name:
-      - default
-    spot_price: 0.04
-    wait_timeout: 1800
-    ssh_user: ubuntu
-    groups:
-      - debian_family
-      - zookeeper
+  # - name: test-aws-ubuntu18-zookeeper
+  #   image: ami-012fd5eb46f56731f
+  #   platform: ubuntu18
+  #   instance_type: m5.large
+  #   region: us-east-1
+  #   vpc_subnet_id: subnet-0f2b9cd66faea38af
+  #   assign_public_ip: false
+  #   security_group_name:
+  #     - default
+  #   spot_price: 0.04
+  #   wait_timeout: 1800
+  #   ssh_user: ubuntu
+  #   groups:
+  #     - debian_family
+  #     - zookeeper
 
   - name: test-aws-Debian9-zookeeper
     image: ami-003f19e0e687de1cd
@@ -110,37 +110,37 @@ platforms:
       - zookeeper
       - zookeeper_3_5
 
-  - name: test-aws-Windows2016-zookeeper-tgz2
-    image: ami-00a20f508263efd30
-    platform: windows2016core
-    region: us-east-1
-    instance_type: m5.large
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
-    spot_price: 0.14
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    groups:
-      - windows
-      - zookeeper
-      - tarball
+  # - name: test-aws-Windows2016-zookeeper-tgz2
+  #   image: ami-00a20f508263efd30
+  #   platform: windows2016core
+  #   region: us-east-1
+  #   instance_type: m5.large
+  #   vpc_subnet_id: subnet-0f2b9cd66faea38af
+  #   assign_public_ip: false
+  #   spot_price: 0.14
+  #   security_group_name:
+  #     - default
+  #   wait_timeout: 1800
+  #   groups:
+  #     - windows
+  #     - zookeeper
+  #     - tarball
 
-  - name: test-aws-Windows2019-zookeeper-choko2
-    image: ami-0477b9335a5a75438
-    platform: windows2019core
-    region: us-east-1
-    instance_type: m5.large
-    vpc_subnet_id: subnet-01be2149
-    assign_public_ip: true
-    spot_price: 0.14
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    groups:
-      - windows
-      - zookeeper
-      - chocolatey
+  # - name: test-aws-Windows2019-zookeeper-choko2
+  #   image: ami-0477b9335a5a75438
+  #   platform: windows2019core
+  #   region: us-east-1
+  #   instance_type: m5.large
+  #   vpc_subnet_id: subnet-01be2149
+  #   assign_public_ip: true
+  #   spot_price: 0.14
+  #   security_group_name:
+  #     - default
+  #   wait_timeout: 1800
+  #   groups:
+  #     - windows
+  #     - zookeeper
+  #     - chocolatey
 
 provisioner:
   name: ansible

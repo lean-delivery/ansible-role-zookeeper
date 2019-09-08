@@ -25,7 +25,7 @@ Lint:
   tags:
     - aws
 
-.Docker zookeeper:
+Docker zookeeper:
   stage: deployment test
   script:
     - molecule test -s default
