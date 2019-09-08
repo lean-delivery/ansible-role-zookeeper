@@ -109,6 +109,9 @@ Role Variables
  - `zk_inventory_group` - zookeeper inventory group name
     default: `zookeeper`
 
+ - `zk_address` - zookeeper node communication address. Usual usage assume this to be an address of local interface inside trusted network.
+    default: `'{{ ansible_host }}'`
+
   - `zk_service_name` - zookeeper service name
     default: `zookeeper`
 

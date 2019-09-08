@@ -3,7 +3,5 @@
   hosts: all
   roles:
     - role: ansible-role-zookeeper
-      zk_force_myid: false
-      zk_force_config: false
       zk_config:
           maxClientCnxns: 60
