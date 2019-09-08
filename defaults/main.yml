@@ -17,8 +17,7 @@ zk_autopurge_snapRetainCount: 10
 zk_reconfig_enabled: true
 zk_standalone_enabled: true
 zk_data_dir: '{{ zk_default_data_dir }}'
-zk_log_dir: >-
-  {{ zk_default_log_dir | regex_replace('\\', '\\\\') }}
+zk_log_dir: '{{ zk_default_log_dir }}'
 zk_dir: '{{ zk_default_dir }}'
 zk_choko_basedir: C:\zookeeper
 zk_force_myid: true

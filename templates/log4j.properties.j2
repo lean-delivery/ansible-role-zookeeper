@@ -1,10 +1,10 @@
 # Define some default values that can be overridden by system properties
 zookeeper.root.logger=INFO, CONSOLE, ROLLINGFILE
 zookeeper.console.threshold=INFO
-zookeeper.log.dir={{ zk_log_dir }}
+zookeeper.log.dir={{ zk_log_dir | replace('\\', '\\\\') }}
 zookeeper.log.file=zookeeper.log
 zookeeper.log.threshold=DEBUG
-zookeeper.tracelog.dir={{ zk_log_dir }}
+zookeeper.tracelog.dir={{ zk_log_dir | replace('\\', '\\\\') }}
 zookeeper.tracelog.file=zookeeper_trace.log
 
 #
@@ -14,10 +14,10 @@ zookeeper.tracelog.file=zookeeper_trace.log
 # Format is "<default threshold> (, <appender>)+
 
 # DEFAULT: console appender only
-log4j.rootLogger=${zookeeper.root.logger}
+#log4j.rootLogger=${zookeeper.root.logger}
 
 # Example with rolling log file
-#log4j.rootLogger=DEBUG, CONSOLE, ROLLINGFILE
+log4j.rootLogger=INFO, CONSOLE, ROLLINGFILE
 
 # Example with rolling log file and tracing
 #log4j.rootLogger=TRACE, CONSOLE, ROLLINGFILE, TRACEFILE

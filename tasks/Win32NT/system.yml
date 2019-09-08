@@ -49,6 +49,14 @@
   notify:
     - restart Zookeeper for Windows
 
+- name: Write env file
+  win_template:
+    src: zkEnv.cmd.j2
+    dest: '{{ zk_dir }}/bin/zkEnv.cmd'
+    force: '{{ zk_force_config }}'
+  notify:
+    - restart Zookeeper for Windows
+
 - name: Create a service via nssm
   win_nssm:
     name: '{{ zk_service_name }}'
@@ -60,31 +68,18 @@
     name: '{{ zk_service_name }}'
     state: started
   register: zookeeper_service
-  # until: "zookeeper_service.state == 'running'"
-  # retries: 50
+  until: "zookeeper_service.state == 'running'"
+  retries: 50
   ignore_errors: true
   when:
     - zk_service_start | bool
 
-- name: Find log files
-  win_find:
-    paths: '{{ zk_log_dir }}'
-    recurse: true
-    # file_type: directory
-    # patterns: '{{ java_folder }}'
-    # use_regex: true
-  register: log_dir
-
-- name: Debug log dir
-  debug:
-    var: log_dir
-
-# - name: Check Zookeeper client port status
-#   win_wait_for:
-#     port: '{{ zk_client_port }}'
-#     state: started
-#     timeout: 600
-#     delay: 2
-#     connect_timeout: 10
-#   when:
-#     - zk_service_start | bool
+- name: Check Zookeeper client port status
+  win_wait_for:
+    port: '{{ zk_client_port }}'
+    state: started
+    timeout: 600
+    delay: 2
+    connect_timeout: 10
+  when:
+    - zk_service_start | bool
