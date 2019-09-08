@@ -110,7 +110,7 @@ platforms:
       - zookeeper
       - zookeeper_3_5
 
-  - name: test-aws-Windows2016-zookeeper-tgz
+  - name: test-aws-Windows2016-zookeeper-tgz2
     image: ami-00a20f508263efd30
     platform: windows2016core
     region: us-east-1
@@ -126,7 +126,7 @@ platforms:
       - zookeeper
       - tarball
 
-  - name: test-aws-Windows2019-zookeeper-choko
+  - name: test-aws-Windows2019-zookeeper-choko2
     image: ami-0477b9335a5a75438
     platform: windows2019core
     region: us-east-1

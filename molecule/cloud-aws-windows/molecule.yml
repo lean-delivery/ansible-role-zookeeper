@@ -43,7 +43,7 @@ platforms:
       - zookeeper
       - tarball
 
-  - name: test-aws-Windows2019-zookeeper-tgz35
+  - name: test-aws-Windows2019-zookeeper-tgz1
     image: ami-0477b9335a5a75438
     platform: windows2019core
     region: us-east-1
