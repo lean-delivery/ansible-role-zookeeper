@@ -23,7 +23,7 @@ Lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
 .Docker zookeeper:
   stage: deployment test
