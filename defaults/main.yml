@@ -1,6 +1,6 @@
 ---
 zk_config: []
-zk_version: 3.5.6
+zk_version: 3.5.5
 zk_url: '{{ zk_default_url }}'
 zk_tarball_installation: true
 zk_user: zookeeper
