@@ -1,7 +1,7 @@
 ---
 zk_config: []
 zk_version: 3.4.14
-zk_url: '{{ default_zk_url }}'
+zk_url: '{{ zk_default_url }}'
 zk_tarball_installation: true
 zk_user: zookeeper
 zk_group: zookeeper
