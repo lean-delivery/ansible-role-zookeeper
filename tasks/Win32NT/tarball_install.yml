@@ -10,6 +10,13 @@
     name: 7zip
     state: present
 
+- name: Install PSCX
+  win_psmodule:
+    name: Pscx
+    state: present
+    allow_clobber: true
+
+
 - name: Get artifact checksum file
   win_uri:
     url: '{{ zk_url }}.{{ zk_checksum }}'
