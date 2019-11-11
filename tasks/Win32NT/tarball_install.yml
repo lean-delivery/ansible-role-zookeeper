@@ -54,13 +54,16 @@
 
 - name: List zk directory
   win_find:
-    paths: '{{ zk_tarball_dir }}\{{ zk_file_url | splitext | first | splitext | first }}'
+    paths: '{{ zk_tarball_dir }}\{{ zk_file_url | splitext | first | splitext | first }}\bin'
     recurse: true
   register: zk_dir_files
 
+- name: Set file list
+  zk_file_list: '{{ zk_dir_files.files | map(attribute="path") | list }}'
+
 - name: Out zk_dir_files
   debug:
-    var: zk_dir_files.files
+    var: zk_file_list
 
 - name: Copy unarchived tarball to home directory
   win_copy:
