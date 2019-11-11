@@ -69,7 +69,7 @@ provisioner:
         zk_tarball_installation:  true
   playbooks:
     create: ../resources/provisioning/AZURE/create.yml
-    prepare: ../resources/provisioning/AZURE/prepare.yml
+    prepare: prepare.yml
     destroy: ../resources/provisioning/AZURE/destroy.yml
     verify: ../resources/tests/verify.yml
   lint:

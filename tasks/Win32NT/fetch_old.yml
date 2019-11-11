@@ -1,0 +1,16 @@
+---
+- name: 'Get {{ zk_checksum }} checksum of file'
+  win_stat:
+    path: '{{ zk_tarball_dir }}\{{ zk_file_url }}'
+    get_checksum: true
+    checksum_algorithm: '{{ zk_checksum }}'
+  register: artifact
+
+- name: Download with checksum validation
+  include_tasks: fetch_checksum.yml
+  when: |
+    not artifact.stat.exists
+    or artifact.stat.checksum != artifact_checksum
+  retries: 15
+  delay: 2
+  until: artifact.stat.checksum == artifact_checksum
