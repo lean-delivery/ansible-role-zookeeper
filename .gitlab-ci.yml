@@ -23,16 +23,16 @@ Lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
-Docker zookeeper:
+.Docker zookeeper:
   stage: deployment test
   script:
     - molecule test -s default
   tags:
     - aws
 
-AWS zookeeper:
+.AWS zookeeper:
   image:
     name: leandelivery/docker-ansible-ci:ansible-2.7
   variables:
@@ -43,7 +43,14 @@ AWS zookeeper:
   tags:
     - aws
 
-AWS Windows zookeeper:
+AZURE zookeeper:
+  stage: deployment test
+  script:
+    - molecule test -s cloud-azure-direct
+  tags:
+    - azure
+
+.AWS Windows zookeeper:
   image:
     name: leandelivery/docker-ansible-ci:ansible-2.7
   variables:
@@ -54,7 +61,7 @@ AWS Windows zookeeper:
   tags:
     - aws
 
-EPC zookeeper:
+.EPC zookeeper:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test
