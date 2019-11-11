@@ -1,6 +1,6 @@
 ---
 - name: Include common prepare
-  import_playbook: provisioning/AZURE/prepare.yml
+  import_playbook: ../resources/provisioning/AZURE/prepare.yml
 
 - name: Install java
   hosts: windows
