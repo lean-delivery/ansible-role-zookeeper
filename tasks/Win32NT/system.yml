@@ -13,6 +13,8 @@
     name: ZOOKEEPER_HOME
     value: '{{ zk_dir }}'
     level: machine
+  notify:
+    - restart Zookeeper for Windows
 
 - name: Set path
   win_path:
