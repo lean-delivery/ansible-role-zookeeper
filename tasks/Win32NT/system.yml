@@ -1,25 +1,4 @@
 ---
-- name: Check zk_root_url
-  block:
-    - name: Check zk_root_url
-      win_uri:
-        url: '{{ zk_root_url }}/{{ zk_version }}'
-        return_content: true
-      register: zk_root_page
-  rescue:
-    - name: Check zk_root_url
-      win_uri:
-        url: '{{ zk_root_url }}/zookeeper-{{ zk_version }}'
-        return_content: true
-      register: zk_root_page
-
-- name: Set zk_version
-  set_fact:
-    zk_version: >-
-      {{ zk_root_page.content
-          | regex_findall('[\D-]*([\d\.]+)(-bin)?\.tar.gz')
-          | first | list | first }}
-
 - name: Install nssm
   win_chocolatey:
     name: nssm
