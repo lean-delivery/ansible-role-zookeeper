@@ -1,5 +1,4 @@
 ---
-# Run all tests
 stages:
   - lint
   - deployment test
@@ -7,22 +6,24 @@ stages:
 before_script:
   - rm -rf molecule/resources/provisioning
   - ansible --version
+  - ansible-lint --version
   - molecule --version
   - git clone https://github.com/lean-delivery/ansible-molecule-drivers.git molecule/resources/provisioning
 
 variables:
   GET_SOURCES_ATTEMPTS: "5"
 
-Ansible lint:
+Lint:
   stage: lint
   before_script:
     - git clone https://github.com/lean-delivery/ansible-lint-rules.git ~/ansible-lint-rules
   script:
+    - yamllint . -c .yamllint
     - ansible-lint . -c .ansible-lint
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
 Docker zookeeper:
   stage: deployment test
@@ -40,7 +41,23 @@ AWS zookeeper:
   tags:
     - aws
 
-EPC zookeeper:
+AZURE zookeeper:
+  stage: deployment test
+  script:
+    - molecule test -s cloud-azure-direct
+  tags:
+    - azure
+
+.AWS Windows zookeeper:
+  variables:
+    AWS_REGION: us-east-1
+  stage: deployment test
+  script:
+    - molecule test -s cloud-aws-windows
+  tags:
+    - aws
+
+.EPC zookeeper:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test

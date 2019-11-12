@@ -1,0 +1,6 @@
+---
+zk_install_type: '{{ zk_tarball_installation | ternary("tarball_install", "package_install") }}'
+zk_default_data_dir: /var/lib/zookeeper
+zk_default_log_dir: /var/log/zookeeper
+zk_default_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
+zk_default_tarball_dir: /opt/src

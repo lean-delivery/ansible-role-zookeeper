@@ -3,4 +3,3 @@
   hosts: all
   roles:
     - role: ansible-role-zookeeper
-      zk_version: 3.5.5

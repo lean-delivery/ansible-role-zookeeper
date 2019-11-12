@@ -8,7 +8,13 @@ Zookeeper installation
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F36578%2F&query=$.min_ansible_version)
 
 This role:
-  - Installs ZooKeeper
+  - Installs ZooKeeper:
+      - Linux:
+        * tarball
+        * package
+      - Windows:
+        * tarball
+        * chocolatey
   - Configures it as a single node or a cluster
 
 Requirements
@@ -16,127 +22,116 @@ Requirements
 
  - Minimal Version of the ansible for installation: 2.7
  Supported OS:
-   - CentOS
+  - CentOS
        7
-   - Ubuntu
+  - Ubuntu
     - 16.04
     - 18.04
+  - Amazon Linux 2
   - Debian
     - 9
+  - Windows
+    - 2016
+    - 2019
 
 Role Variables
 --------------
 
- - `zk_version` -  version of the package
+ - `zk_config` -  custom zookeeper configuration parameters   
+    default: `[]`
 
-    default: `3.4.14`
+ - `zk_version` -  version of the package. Tarball installation can use `current` or `stable` value of this variable which links to related zookeeper versions. Installation from repositories do not require this version to be specified.   
+    default: `current`
 
- - `zk_url` - download url
-
-    default: `http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz` for versions < 3.5
-
+ - `zk_url` - download url   
+    default: `http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/zookeeper-{{zk_version}}.tar.gz` for versions < 3.5   
     default: `http://www.us.apache.org/dist/zookeeper/zookeeper-{{zk_version}}/apache-zookeeper-{{zk_version}}-bin.tar.gz` for versions 3.5.x
 
- - `zk_tarball_installation` - installation from tarball(or repository)
-
+ - `zk_tarball_installation` - installation from tarball. Linux support install via repository and tarball. Windows support install via chocolatey and tarball   
     default: `true`
 
- - `zk_user` - OS user name for zookeeper
-
+ - `zk_user` - OS user name for zookeeper   
     default: `zookeeper`
 
- - `zk_group` - OS user group name for zookeeper
-
+ - `zk_group` - OS user group name for zookeeper   
     default: `zookeeper`
 
- - `zk_debian_apt_repositories` -  path to apt repository
-
+ - `zk_debian_apt_repositories` -  path to apt repository   
     default: `"deb http://us-east1.gce.archive.ubuntu.com/ubuntu/ bionic universe"`
 
- - `zk_redhat_yum_repositories` -  path to yum repository
-
+ - `zk_redhat_yum_repositories` -  path to yum repository   
     default: `- https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm`
 
- - `zk_client_port` - zookeeper port
-
+ - `zk_client_port` - zookeeper port   
     default: `2181`
 
- - `zk_init_limit` - amount of time in ticks to allow followers to connect and sync to a leader
-
+ - `zk_init_limit` - amount of time in ticks to allow followers to connect and sync to a leader   
     default: `5`
 
- - `zk_sync_limit` - amount of time in ticks to allow followers to sync with ZooKeeper
-
+ - `zk_sync_limit` - amount of time in ticks to allow followers to sync with ZooKeeper   
     default: `2`
 
- - `zk_tick_time` - it is used to regulate heartbeats, and timeouts. For example, the minimum session timeout will be two ticks
-
+ - `zk_tick_time` - it is used to regulate heartbeats, and timeouts. For example, the minimum session timeout will be two ticks   
     default: `2000`
 
- - `zk_autopurge_purgeInterval` - the time interval in hours for which the purge task has to be triggered
-
+ - `zk_autopurge_purgeInterval` - the time interval in hours for which the purge task has to be triggered   
     default: `0`
 
- - `zk_autopurge_snapRetainCount` - when enabled, ZooKeeper auto purge feature retains the autopurge.snapRetainCount most recent snapshots and the corresponding transaction logs in the dataDir and dataLogDir respectively and deletes the rest
-
+ - `zk_autopurge_snapRetainCount` - when enabled, ZooKeeper auto purge feature retains the autopurge.snapRetainCount most recent snapshots and the corresponding transaction logs in the dataDir and dataLogDir respectively and deletes the rest   
     default: `10`
 
- - `zk_data_dir` - libraries directory
+ - `zk_data_dir` - libraries directory   
+    default: `'{{ zk_default_data_dir }}'`
 
-    default: `/var/lib/zookeeper`
+ - `zk_log_dir` - logs directory   
+    default: `{{ zk_default_log_dir }}`
 
- - `zk_log_dir` - logs directory
+ - `zk_dir` - zookeeper directory   
+    default: `{{ zk_default_dir }}`
 
-    default: `/var/log/zookeeper`
+ - `zk_choko_basedir` - zookeeper base directory when installing from chocolatey   
+    default: `C:\zookeeper`
 
- - `zk_dir` - zookeeper direcotry
-
-    default: `"{{ zk_tarball_installation | ternary('/opt/zookeeper-' + zk_version, '/usr/lib/zookeeper') }}"`
-
- - `zk_force_myid` - to reset id
-
+ - `zk_force_myid` - to reset id   
     default: `true`
 
- - `zk_force_config` - to rewrite config files
-
+ - `zk_force_config` - to rewrite config files   
     default: `true`
 
- - `zk_tarball_dir` - place where you download tarball
+ - `zk_tarball_dir` - place where you download tarball   
+    default: `{{ zk_default_tarball_dir }}`
 
-    default: `/opt/src`
-
- - `zk_rolling_log_file_max_size` - zookeeper log file size
-
+ - `zk_rolling_log_file_max_size` - zookeeper log file size   
     default: `10MB`
 
- - `zk_max_rolling_log_file_count`- zookeeper log file count
-
+ - `zk_max_rolling_log_file_count`- zookeeper log file count   
     default: `10`
 
- - `zk_inventory_group` - zookeeper inventory group name
-
+ - `zk_inventory_group` - ansible inventory group name for hosts running zookeeper   
     default: `zookeeper`
 
-  - `zk_service_name` - zookeeper service name
+ - `zk_address` - zookeeper node communication address. Usual usage assume this to be an address of local interface inside trusted network.   
+    default: `'{{ ansible_host }}'`   
 
+  - `zk_service_name` - zookeeper service name   
     default: `zookeeper`
 
-  - `zk_service_start` - to start zookeeper service in the end of role/Playbook
-
+  - `zk_service_start` - to start zookeeper service in the end of role/Playbook   
     default: `true`
 
-  - `zk_service_autostart` - Add zookeeper service to automatically start.
-
+  - `zk_service_autostart` - add zookeeper service to automatically start   
     default: `true`
 
-  - `zk_reconfig_enabled` - This option is introduced such that the reconfiguration feature can be completely disabled and any attempts to reconfigure a cluster through reconfig API with or without authentication will fail by default
+  - `zk_standalone_enabled` - with this setting it is possible to start a ZooKeeper ensemble containing a single participant and to dynamically grow it by adding more servers   
+    default: `true`
 
+  - `zk_reconfig_enabled` - This option is introduced such that the reconfiguration feature can be completely disabled and any attempts to reconfigure a cluster through reconfig API with or without authentication will fail by default   
     default: `true`
 
 Dependencies
 ------------
 
-https://github.com/lean-delivery/ansible-role-java
+ZooKeeper runs in Java, release 1.6 or greater (JDK 6 or greater) is required. Java can be installed by corresponding Lean Delivery ansible role as an option: [![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.java-blue.svg)](https://galaxy.ansible.com/lean_delivery/java)
 
 Example Inventory
 ----------------
@@ -166,7 +161,7 @@ Example Playbook
 
 License
 -------
-Apache
+Apache 2.0 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-zookeeper/master/LICENSE)
 
 Author Information
 ------------------

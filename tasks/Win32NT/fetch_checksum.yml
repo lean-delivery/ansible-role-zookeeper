@@ -1,0 +1,13 @@
+---
+- name: 'Download artifact from {{ zk_url }}'
+  win_get_url:
+    url: '{{ zk_url }}'
+    dest: '{{ zk_tarball_dir }}/{{ zk_file_url }}'
+    force: true
+
+- name: 'Get {{ zk_checksum }} checksum of file'
+  win_stat:
+    path: '{{ zk_tarball_dir }}/{{ zk_file_url }}'
+    get_checksum: true
+    checksum_algorithm: '{{ zk_checksum }}'
+  register: artifact

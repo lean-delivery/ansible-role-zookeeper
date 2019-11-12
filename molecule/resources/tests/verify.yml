@@ -1,0 +1,38 @@
+---
+- name: Verify Linux
+  hosts: rhel_family:debian_family
+  tasks:
+  - name: Check Zookeeper service status
+    service:
+      name: 'zookeeper'
+    check_mode: true
+    register: zookeeper_status
+
+  - name: Assest Zookeeper service status
+    assert:
+      that: "'running' == zookeeper_status.status.SubState"
+
+  - name: Check Zookeeper port status
+    wait_for:
+      port: '2181'
+      state: started
+      timeout: 3
+
+- name: Verify Windows
+  hosts: windows
+  tasks:
+  - name: Check Zookeeper service status
+    win_service:
+      name: 'zookeeper'
+    check_mode: true
+    register: zookeeper_status
+
+  - name: Assert Zookeeper service status
+    assert:
+      that: "'running' == zookeeper_status.state"
+
+  - name: Check Zookeeper client port status
+    win_wait_for:
+      port: '2181'
+      state: started
+      timeout: 10

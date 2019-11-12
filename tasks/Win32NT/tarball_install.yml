@@ -1,0 +1,81 @@
+---
+- name: Check zk_root_url
+  block:
+    - name: Check zk_root_url
+      win_uri:
+        url: '{{ zk_root_url }}/{{ zk_version }}'
+        return_content: true
+      register: zk_root_page
+  rescue:
+    - name: Check zk_root_url
+      win_uri:
+        url: '{{ zk_root_url }}/zookeeper-{{ zk_version }}'
+        return_content: true
+      register: zk_root_page
+
+- name: Set zk_version
+  set_fact:
+    zk_version: >-
+      {{ zk_root_page.content
+          | regex_findall('[\D-]*([\d\.]+)(-bin)?\.tar.gz')
+          | first | list | first }}
+
+- name: Install 7zip
+  win_chocolatey:
+    name: 7zip
+    state: present
+
+- name: Install PSCX
+  win_psmodule:
+    name: Pscx
+    state: present
+    allow_clobber: true
+
+- name: Get artifact checksum file
+  win_uri:
+    url: '{{ zk_url }}.{{ zk_checksum }}'
+    return_content: true
+  register: artifact_checksum_file
+
+- name: Get artifact checksum
+  set_fact:
+    artifact_checksum: '{{ artifact_checksum_file.content.split(" ")[0] }}'
+
+- name: Ansible 2.7 fetch
+  include_tasks: fetch_old.yml
+  when: ansible_version.full is version('2.8.0', '<')
+
+- name: 'Download artifact from {{ zk_url }}'
+  win_get_url:
+    url: '{{ zk_url }}'
+    dest: '{{ zk_tarball_dir }}/{{ zk_file_url }}'
+    force: true
+    checksum: '{{ artifact_checksum }}'
+    checksum_algorithm: '{{ zk_checksum }}'
+  when: ansible_version.full is version('2.8.0', '>=')
+
+- name: Unarchive gz
+  win_unzip:
+    src: '{{ zk_tarball_dir }}\{{ zk_file_url }}'
+    dest: '{{ zk_tarball_dir }}'
+    recurse: false
+    creates: '{{ zk_tarball_dir }}\{{ zk_file_url | splitext | first }}'
+
+- name: Unzip tar
+  win_command: '7z x -y {{ zk_file_url | splitext | first }}'
+  args:
+    chdir: '{{ zk_tarball_dir }}'
+    creates: '{{ zk_tarball_dir }}\{{ zk_file_url | splitext | first | splitext | first }}'
+
+- name: Creates home directory
+  win_file:
+    path: '{{ zk_dir }}'
+    state: directory
+
+- name: Sync unarchived tarball to home directory
+  win_robocopy:
+    src: '{{ zk_tarball_dir }}\{{ zk_file_url | splitext | first | splitext | first }}'
+    dest: '{{ zk_dir }}'
+    flags: /E /XF zoo.cfg /XF log4j.properties /XF zoo.cfg.dynamic /XF zkEnv.cmd /XF myid
+  notify:
+    - restart Zookeeper for Windows

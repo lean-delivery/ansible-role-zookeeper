@@ -1,15 +1,18 @@
 ---
 # vars file for zookeeper
-zk_install_type: '{{ zk_tarball_installation | ternary("tarball_install", "package_install") }}'
 zk_checksum: sha512
 zk_config_file_list: >-
   {{ (zk_version is version_compare('3.5.0', '>=')) | ternary(
     ['zoo.cfg', 'log4j.properties', 'zoo.cfg.dynamic'],
     ['zoo.cfg', 'log4j.properties']
   )}}
-zk_url_preffix: '{{ (zk_version is version_compare("3.5.0", ">=")) | ternary("apache-","") }}'
-zk_url_postfix: '{{ (zk_version is version_compare("3.5.0", ">=")) | ternary("-bin","") }}'
-zk_root_url: 'http://www.us.apache.org/dist/zookeeper'
-zk_version_url: '{{ zk_root_url }}/zookeeper-{{zk_version}}'
-zk_file_url: '{{ zk_url_preffix }}zookeeper-{{zk_version}}{{ zk_url_postfix }}.tar.gz'
-default_zk_url: '{{ zk_version_url }}/{{ zk_file_url }}'
+zk_url_prefix: >-
+  {{ (zk_version is version('3.5.0', '>=')) | ternary('apache-','') }}
+zk_url_postfix: >-
+  {{ (zk_version is version('3.5.0', '>=')) | ternary('-bin','') }}
+zk_default_version: >-
+  {{ (zk_tarball_installation | bool) | ternary('current', '3.4.9') }}
+zk_root_url: 'http://www-us.apache.org/dist/zookeeper'
+zk_version_url: '{{ zk_root_url }}/zookeeper-{{ zk_version }}'
+zk_file_url: '{{ zk_url_prefix }}zookeeper-{{ zk_version }}{{ zk_url_postfix }}.tar.gz'
+zk_default_url: '{{ zk_version_url }}/{{ zk_file_url }}'

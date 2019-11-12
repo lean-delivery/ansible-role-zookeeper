@@ -11,27 +11,28 @@ lint:
     config-file: .yamllint
 platforms:
   - name: test-epc-centos7-zookeeper
-    shape: mini
     image: CentOS7_64-bit
+    shape: small
     region: EPAM-BY2
     wait_timeout: 3600
     groups:
       - zookeeper
-      - zookeeper_centos
+      - rhel_family
+
   - name: test-epc-ubuntu1804-zookeeper
-    shape: mini
     image: Ubuntu18.04_64-bit
+    shape: small
     region: EPAM-BY2
     wait_timeout: 3600
     groups:
       - zookeeper
-      - zookeeper_ubuntu
+      - debian_family
 provisioner:
   name: ansible
   log: true
   playbooks:
     create: ../resources/provisioning/EPC/create.yml
-    prepare: ../resources/provisioning/EPC/prepare.yml
+    prepare: ../resources/prepare.yml
     destroy: ../resources/provisioning/EPC/destroy.yml
   config_options:
     ssh_connection:

@@ -11,88 +11,53 @@ lint:
     config-file: .yamllint
 platforms:
 
-  - name: test-aws-centos7-zookeeper
-    image: ami-9887c6e7
-    platform: centos7
-    instance_type: m5.large
+  - name: test-aws-Windows2019-zookeeper-choko
+    image: ami-0477b9335a5a75438
+    platform: windows2019core
     region: us-east-1
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
-    spot_price: 0.04
+    instance_type: m5.large
+    vpc_subnet_id: subnet-314c223d
+    assign_public_ip: true
+    spot_price: 0.14
     security_group_name:
       - default
     wait_timeout: 1800
-    ssh_user: centos
     groups:
-      - rhel_family
+      - windows
       - zookeeper
-      - package_install
+      - chocolatey
 
-  - name: test-aws-centos8-zookeeper-current
-    image: ami-0ed2ad9dc845b42b6
-    platform: centos8
-    instance_type: m5.large
+  - name: test-aws-Windows2016-zookeeper-tgz
+    image: ami-00a20f508263efd30
+    platform: windows2016core
     region: us-east-1
+    instance_type: m5.large
     vpc_subnet_id: subnet-0f2b9cd66faea38af
     assign_public_ip: false
-    spot_price: 0.04
+    spot_price: 0.14
     security_group_name:
       - default
     wait_timeout: 1800
-    ssh_user: centos
     groups:
-      - rhel_family
+      - windows
       - zookeeper
+      - tarball
 
-  - name: test-aws-Amazon2-zookeeper
-    image: ami-0b898040803850657
-    platform: amazon2
-    instance_type: m5.large
+  - name: test-aws-Windows2019-zookeeper-tgz1
+    image: ami-0477b9335a5a75438
+    platform: windows2019core
     region: us-east-1
+    instance_type: m5.large
     vpc_subnet_id: subnet-0f2b9cd66faea38af
     assign_public_ip: false
-    spot_price: 0.04
+    spot_price: 0.14
     security_group_name:
       - default
     wait_timeout: 1800
-    ssh_user: ec2-user
     groups:
-      - rhel_family
+      - windows
       - zookeeper
-
-  - name: test-aws-ubuntu18-zookeeper
-    image: ami-012fd5eb46f56731f
-    platform: ubuntu18
-    instance_type: m5.large
-    region: us-east-1
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
-    security_group_name:
-      - default
-    spot_price: 0.04
-    wait_timeout: 1800
-    ssh_user: ubuntu
-    groups:
-      - debian_family
-      - zookeeper
-      - package_install
-
-  - name: test-aws-Debian9-zookeeper
-    image: ami-003f19e0e687de1cd
-    platform: debian9
-    instance_type: m5.large
-    region: us-east-1
-    vpc_subnet_id: subnet-0f2b9cd66faea38af
-    assign_public_ip: false
-    spot_price: 0.04
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    ssh_user: admin
-    groups:
-      - debian_family
-      - zookeeper
-      - zookeeper_3_5
+      - tarball
 
 provisioner:
   name: ansible
@@ -102,10 +67,6 @@ provisioner:
       callback_whitelist: profile_tasks,timer
   inventory:
     group_vars:
-      package_install:
-        zk_tarball_installation: false
-      zookeeper_3_5:
-        zk_version: 3.5.5
       windows:
         ansible_connection: winrm
         ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', true) }}"
@@ -123,7 +84,7 @@ provisioner:
   lint:
     name: ansible-lint
 scenario:
-  name: cloud-aws-direct
+  name: cloud-aws-windows
 verifier:
   name: ansible
   lint:

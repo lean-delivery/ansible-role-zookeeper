@@ -1,0 +1,87 @@
+---
+- name: Install nssm
+  win_chocolatey:
+    name: nssm
+    state: present
+
+- name: Zookeeper Installation
+  include_tasks: '{{ zk_install_type }}.yml'
+
+- name: Set an environment variable zookeperhome
+  win_environment:
+    state: present
+    name: ZOOKEEPER_HOME
+    value: '{{ zk_dir }}'
+    level: machine
+  notify:
+    - restart Zookeeper for Windows
+
+- name: Set path
+  win_path:
+    elements: '%ZOOKEEPER_HOME%\bin'
+    state: present
+    level: machine
+
+- name: Create log directory
+  win_file:
+    path: '{{ zk_log_dir }}'
+    state: directory
+
+- name: Create data directory
+  win_file:
+    path: '{{ zk_data_dir }}'
+    state: directory
+
+- name: Write myid file
+  win_template:
+    src: myid.j2
+    dest: '{{ zk_default_data_dir }}/myid'
+    force: '{{ zk_force_myid }}'
+  notify:
+    - restart Zookeeper for Windows
+
+- name: Configure zookeeper configs
+  win_template:
+    src: '{{ config_item }}.j2'
+    dest: '{{ zk_package_config_dir }}/{{ config_item }}'
+    force: '{{ zk_force_config }}'
+  loop: '{{ zk_config_file_list }}'
+  loop_control:
+    loop_var: config_item
+  notify:
+    - restart Zookeeper for Windows
+
+- name: Write env file
+  win_template:
+    src: zkEnv.cmd.j2
+    dest: '{{ zk_dir }}/bin/zkEnv.cmd'
+    force: '{{ zk_force_config }}'
+  notify:
+    - restart Zookeeper for Windows
+
+- name: Create a service via nssm
+  win_nssm:
+    name: '{{ zk_service_name }}'
+    application: '{{ zk_dir }}/bin/zkServer.cmd'
+    state: present
+
+- name: Start the service
+  win_service:
+    name: '{{ zk_service_name }}'
+    state: started
+  register: zookeeper_service
+  until: "zookeeper_service.state == 'running'"
+  retries: 50
+  ignore_errors: true
+  when:
+    - zk_service_start | bool
+
+- name: Check Zookeeper client port status
+  win_wait_for:
+    port: '{{ zk_client_port }}'
+    state: started
+    timeout: 600
+    delay: 2
+    connect_timeout: 10
+  when:
+    - zk_service_start | bool

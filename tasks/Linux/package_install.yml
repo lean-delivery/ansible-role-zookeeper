@@ -5,10 +5,10 @@
     - '{{ ansible_os_family }}.yml'
     - default.yml
 
-- name: Choose platform based task
-  include_tasks: '{{ platform }}'
+- name: Choose OS family based task
+  include_tasks: '{{ family }}'
   with_first_found:
     - 'package_install/{{ ansible_os_family }}.yml'
     - not-supported.yml
   loop_control:
-    loop_var: platform
+    loop_var: family

@@ -1,0 +1,7 @@
+---
+zk_install_type: '{{ zk_tarball_installation | ternary("tarball_install", "choco_install") }}'
+zk_default_dir: '{{ zk_tarball_installation | ternary("C:/zookeeper/zookeeper-" + zk_version, zk_choko_basedir + "/zookeeper-3.4.9") }}'
+zk_package_config_dir: '{{ zk_default_dir }}/conf'
+zk_default_log_dir: C:\LOG
+zk_default_data_dir: '{{ zk_default_dir }}/data'
+zk_default_tarball_dir: '{{ ansible_env.TEMP }}'
