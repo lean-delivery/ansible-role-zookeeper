@@ -64,12 +64,13 @@ provisioner:
         ansible_winrm_transport: credssp
         ansible_winrm_server_cert_validation: ignore
       chocolatey:
-        zk_tarball_installation:  false
+        zk_tarball_installation: false
+        zk_server_role: observer
       tarball:
         zk_tarball_installation:  true
   playbooks:
     create: ../resources/provisioning/AZURE/create.yml
-    prepare: prepare.yml
+    prepare: ../resources/prepare.yml
     destroy: ../resources/provisioning/AZURE/destroy.yml
     verify: ../resources/tests/verify.yml
   lint:

@@ -6,3 +6,10 @@
   hosts: all
   roles:
     - role: lean_delivery.java
+
+- name: Install NuGet for Windows
+  hosts: windows
+  tasks:
+    - name: Install NuGet
+      win_shell: 'Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force'
+      changed_when: false
