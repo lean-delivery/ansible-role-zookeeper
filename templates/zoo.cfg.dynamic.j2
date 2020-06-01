@@ -1,11 +1,6 @@
 {%- set ips = [] %}
 {%- for host in groups[zk_inventory_group] %}
-{% if host == inventory_hostname %}
-{%- set zk_address_local = '0.0.0.0' %}
-{% else %}
-{%- set zk_address_local = hostvars[host]['zk_address'] %}
-{% endif %}
-{{- ips.append(dict(id=loop.index, host=host, ip=zk_address_local, role=hostvars[host]['zk_server_role'])) }}
+{{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['zk_address'], role=hostvars[host]['zk_server_role'])) }}
 {%- endfor %}
 
 {% for server in ips %}
